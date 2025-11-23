@@ -5,19 +5,16 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>cn.junoyi</groupId>
-        <artifactId>JunoYI</artifactId>
-        <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
+    <groupId>cn.junoyi</groupId>
     <artifactId>junoyi-dependencies</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>junoyi-dependencies</name>
     <description>JunoYi 项目依赖管理 - 统一管理所有第三方和内部模块的版本</description>
 
     <properties>
+        <!-- 项目版本 -->
+        <revision>1.0.0</revision>
         <!-- 统一依赖版本号 -->
         <spring.boot.version>3.2.0</spring.boot.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
