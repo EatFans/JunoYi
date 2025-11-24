@@ -185,8 +185,6 @@ cn.junoyi.module.xxx                # 模块实现
 
 ## 📮 联系方式
 
-- 官网: https://junoyi.com/
-- 邮箱: contact@junoyi.com
 
 ## 🙏 鸣谢
 
