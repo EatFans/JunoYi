@@ -16,7 +16,7 @@
     
     <!-- 引入文件输出配置 -->
     <springProperty scope="context" name="FILE_ENABLED" source="junoyi.log.file.enabled" defaultValue="false"/>
-    <springProperty scope="context" name="FILE_PATH" source="junoyi.log.file.path" defaultValue="./logs/junoyi.log"/>
+    <springProperty scope="context" name="FILE_PATH" source="junoyi.log.file.path" defaultValue="./logs"/>
     <springProperty scope="context" name="FILE_MAX_SIZE" source="junoyi.log.file.max-size" defaultValue="100MB"/>
     <springProperty scope="context" name="FILE_MAX_HISTORY" source="junoyi.log.file.max-history" defaultValue="30"/>
     <springProperty scope="context" name="FILE_TOTAL_SIZE_CAP" source="junoyi.log.file.total-size-cap" defaultValue="1GB"/>
@@ -35,7 +35,8 @@
     
     <!-- 定义文件输出 - 使用JunoYi自定义编码器（无颜色版本） -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${FILE_PATH}</file>
+        <!-- 当前日志文件：使用固定名称 -->
+        <file>${FILE_PATH}/junoyi.log</file>
         <encoder class="cn.junoyi.framework.log.encoder.JunoYiLogbackEncoder">
             <showThreadName>${SHOW_THREAD_NAME}</showThreadName>
             <showMDC>${SHOW_MDC}</showMDC>
@@ -43,11 +44,12 @@
             <maxClassNameLength>${MAX_CLASS_NAME_LENGTH}</maxClassNameLength>
             <colorEnabled>false</colorEnabled> <!-- 文件输出不使用颜色 -->
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${FILE_PATH}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxFileSize>${FILE_MAX_SIZE}</maxFileSize>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 历史文件命名：每分钟滚动 -->
+            <fileNamePattern>${FILE_PATH}/%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
             <maxHistory>${FILE_MAX_HISTORY}</maxHistory>
             <totalSizeCap>${FILE_TOTAL_SIZE_CAP}</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
     </appender>
     

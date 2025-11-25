@@ -122,13 +122,14 @@ public class Test {
             );
             
             JunoYiLogger.info("JUNOYI", "使用JunoYiLogger的MDC日志", context);
-            
+
+
         } finally {
             // 清理MDC
             MDC.clear();
         }
         
-        log.info("MDC清理后的日志");
+//   /**/     log.info("MDC清理后的日志");
     }
     
     /**
