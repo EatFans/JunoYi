@@ -117,35 +117,35 @@ public class JunoYiLogger {
      * 框架启动日志
      */
     public static void startup(String component) {
-        info("🚀 JunoYi Framework [{}] 启动成功", component);
+        info("   JunoYi Framework [{}] 启动成功", component);
     }
 
     /**
      * 框架关闭日志
      */
     public static void shutdown(String component) {
-        info("🛑 JunoYi Framework [{}] 已关闭", component);
+        info("   JunoYi Framework [{}] 已关闭", component);
     }
 
     /**
      * 性能监控日志
      */
     public static void performance(String operation, long duration) {
-        info("⏱️  性能监控 - 操作: [{}], 耗时: [{}]ms", operation, duration);
+        info("   性能监控 - 操作: [{}], 耗时: [{}]ms", operation, duration);
     }
 
     /**
      * 业务日志
      */
     public static void business(String module, String action, String result) {
-        info("📋 业务日志 - 模块: [{}], 操作: [{}], 结果: [{}]", module, action, result);
+        info("   业务日志 - 模块: [{}], 操作: [{}], 结果: [{}]", module, action, result);
     }
 
     /**
      * 异常日志（带业务上下文）
      */
     public static void businessError(String module, String action, String errorMsg, Throwable t) {
-        error("❌ 业务异常 - 模块: [{}], 操作: [{}], 错误: [{}]", module, action, errorMsg, t);
+        error("   业务异常 - 模块: [{}], 操作: [{}], 错误: [{}]", module, action, errorMsg, t);
     }
 
     // === 条件日志方法 ===
