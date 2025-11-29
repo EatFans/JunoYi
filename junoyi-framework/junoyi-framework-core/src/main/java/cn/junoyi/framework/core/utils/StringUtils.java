@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * 字符串工具类
  *
- * @author Jxd
+ * @author Fan
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils extends org.apache.commons.lang3.StringUtils {

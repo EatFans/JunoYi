@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author Fan
+ */
 @Slf4j
 @Component
 public class OkHttpUtil {

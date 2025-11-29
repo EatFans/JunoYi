@@ -9,7 +9,7 @@ import java.util.function.Function;
 /**
  * 对象工具类
  *
- * @author 秋辞未寒
+ * @author Fan
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObjectUtils extends ObjectUtil {
