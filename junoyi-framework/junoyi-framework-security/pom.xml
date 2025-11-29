@@ -5,23 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.junoyi</groupId>
-        <artifactId>JunoYI</artifactId>
+        <artifactId>junoyi-framework</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>junoyi-framework</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>junoyi-framework-security</artifactId>
 
-
-    <modules>
-        <module>junoyi-framework-core</module>
-        <module>junoyi-framework-web</module>
-        <module>junoyi-framework-log</module>
-        <module>junoyi-framework-stater</module>
-        <module>junoyi-framework-module-loader</module>
-        <module>junoyi-framework-security</module>
-    </modules>
-
+    <description>
+        安全验证机制核心模块
+    </description>
 
 </project>
