@@ -1,28 +1,24 @@
 package cn.junoyi.framework.core.utils.reflect;
 
+import cn.hutool.core.util.ReflectUtil;
+import com.jxd.common.core.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 
-import static cn.hutool.core.util.ReflectUtil.getMethodByName;
-import static cn.hutool.core.util.ReflectUtil.invoke;
-
 /**
- * 反射工具类
- * 提供调用getter/setter方法，访问私有变量，调用私有方法，获取泛型类型Class，被AOP过的真实类等工具函数。
+ * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
  *
  * @author Fan
  */
 @SuppressWarnings("rawtypes")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReflectUtils {
+public class ReflectUtils extends ReflectUtil {
 
-    private static  final String SETTER_PREFIX = "set";
+    private static final String SETTER_PREFIX = "set";
 
     private static final String GETTER_PREFIX = "get";
-
 
     /**
      * 调用Getter方法.
@@ -56,4 +52,5 @@ public class ReflectUtils {
             }
         }
     }
+
 }
