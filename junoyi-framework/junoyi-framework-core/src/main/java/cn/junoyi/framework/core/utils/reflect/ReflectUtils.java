@@ -1,9 +1,9 @@
 package cn.junoyi.framework.core.utils.reflect;
 
 import cn.hutool.core.util.ReflectUtil;
-import com.jxd.common.core.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 

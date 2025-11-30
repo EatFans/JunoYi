@@ -5,7 +5,7 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.lang.tree.parser.NodeParser;
-import com.jxd.common.core.utils.reflect.ReflectUtils;
+import cn.junoyi.framework.core.utils.reflect.ReflectUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
