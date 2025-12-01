@@ -19,7 +19,6 @@
         <module>junoyi-framework-web</module>
         <module>junoyi-framework-log</module>
         <module>junoyi-framework-stater</module>
-        <module>junoyi-framework-module-loader</module>
         <module>junoyi-framework-security</module>
     </modules>
 
