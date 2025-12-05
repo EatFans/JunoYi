@@ -160,11 +160,11 @@ java -jar target/junoyi-server.jar
 
 ### 包名规范
 ```
-cn.junoyi.common                    # 公共模块
-cn.junoyi.framework.core            # 框架核心
-cn.junoyi.framework.web             # 框架 Web
-cn.junoyi.module.xxx.api            # 模块 API
-cn.junoyi.module.xxx                # 模块实现
+com.junoyi.common                    # 公共模块
+com.junoyi.framework.core            # 框架核心
+com.junoyi.framework.web             # 框架 Web
+com.junoyi.module.xxx.api            # 模块 API
+com.junoyi.module.xxx                # 模块实现
 ```
 
 ### 依赖规则

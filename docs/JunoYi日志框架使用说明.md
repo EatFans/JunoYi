@@ -23,7 +23,7 @@ JunoYi日志框架是一个基于Spring Boot和Logback的高性能日志解决�
 
 ```xml
 <dependency>
-    <groupId>cn.junoyi</groupId>
+    <groupId>com.junoyi</groupId>
     <artifactId>junoyi-framework-log</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -49,7 +49,7 @@ junoyi:
 ### 3. 使用日志
 
 ```java
-import cn.junoyi.framework.log.JunoYiLogger;
+import com.junoyi.framework.log.JunoYiLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
