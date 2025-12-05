@@ -12,5 +12,23 @@
 
     <artifactId>junoyi-module-system-api</artifactId>
 
+    <dependencies>
 
+        <!-- web框架核心 -->
+        <dependency>
+            <groupId>cn.junoyi</groupId>
+            <artifactId>junoyi-framework-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.junoyi</groupId>
+            <artifactId>junoyi-framework-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.junoyi</groupId>
+            <artifactId>junoyi-framework-log</artifactId>
+        </dependency>
+
+    </dependencies>
 </project>

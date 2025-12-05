@@ -7,6 +7,8 @@ junoyi:
   # 版权年份（可选）
   copyrightYear: 2025
   copyright: JunoYi钧逸
+  # 网站备案号
+  registration: 苏@123456
 
   # 端口号
   port: 7588

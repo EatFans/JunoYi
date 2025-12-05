@@ -33,6 +33,11 @@ public class JunoYiProperties {
     private String copyright;
 
     /**
+     * 网站备案号
+     */
+    private String registration;
+
+    /**
      * 服务器端口号
      */
     private int port;
@@ -67,6 +72,14 @@ public class JunoYiProperties {
 
     public void setCopyright(String copyright){
         this.copyright = copyright;
+    }
+
+    public String getRegistration(){
+        return registration;
+    }
+
+    public void setRegistration(String registration){
+        this.registration = registration;
     }
 
     public int getPort(){

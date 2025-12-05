@@ -12,24 +12,10 @@
 
     <artifactId>junoyi-module-system</artifactId>
 
-
-
     <dependencies>
-
-        <!-- web框架核心 -->
         <dependency>
             <groupId>cn.junoyi</groupId>
-            <artifactId>junoyi-framework-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.junoyi</groupId>
-            <artifactId>junoyi-framework-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.junoyi</groupId>
-            <artifactId>junoyi-framework-log</artifactId>
+            <artifactId>junoyi-module-system-api</artifactId>
         </dependency>
     </dependencies>
 </project>
