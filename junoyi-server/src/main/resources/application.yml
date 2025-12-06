@@ -8,9 +8,9 @@ junoyi:
   copyrightYear: 2025
   copyright: JunoYi钧逸
   # 网站备案号
-  registration:
+  registration: 苏@123456
   # LOGO
-#  logo: /static/logo.png
+  logo: /static/logo.png
 
   # 端口号
   port: 7588
