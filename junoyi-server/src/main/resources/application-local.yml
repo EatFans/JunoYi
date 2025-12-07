@@ -29,110 +29,86 @@ spring:
         # 初始化连接数: 应用启动时创建的连接数
         # 建议: 根据应用启动后的平均并发量设置，避免启动时创建过多连接
         initial-size: 5
-        
         # 最小空闲连接数: 连接池中保持的最少空闲连接
         # 建议: 与 initial-size 保持一致，保证基础连接可用
         min-idle: 5
-        
         # 最大活跃连接数: 连接池最多能创建的连接数
         # 建议: 根据数据库服务器性能和应用并发量设置
         # 主库 (写少): 10-20
         # 从库 (读多): 20-50
         max-active: 20
-        
         # 获取连接超时时间: 等待连接的最长时间 (毫秒)
         # 超过此时间未获取到连接会抛出异常
         # 建议: 60000 (60秒)，根据业务容忍度调整
         max-wait: 60000
-        
         # ---------- 连接检测配置 ----------
         # 连接检测间隔: 多久检测一次空闲连接 (毫秒)
         # Druid 会定期检测空闲连接是否有效，无效的会被移除
         # 建议: 60000 (60秒)
         time-between-eviction-runs-millis: 60000
-        
         # 最小空闲时间: 连接在池中最小空闲时间 (毫秒)
         # 超过此时间的空闲连接会被检测是否有效
         # 建议: 300000 (5分钟)
         min-evictable-idle-time-millis: 300000
-        
         # 最大空闲时间: 连接在池中最大空闲时间 (毫秒)
         # 超过此时间的空闲连接会被强制关闭
         # 建议: 900000 (15分钟)，防止连接长时间占用
         max-evictable-idle-time-millis: 900000
-        
         # 验证查询: 用于测试连接是否有效的 SQL
         # MySQL 使用 SELECT 1
         # Oracle 使用 SELECT 1 FROM DUAL
         # PostgreSQL 使用 SELECT 1
         validation-query: SELECT 1
-        
         # 验证查询超时时间 (秒)
         validation-query-timeout: 3
-        
         # 空闲时测试: 从连接池获取连接时，如果空闲时间超过 time-between-eviction-runs-millis，则测试连接
         # 建议: true，保证获取的连接是有效的
         test-while-idle: true
-        
         # 获取时测试: 每次获取连接时都测试
         # 建议: false，影响性能，test-while-idle 已经足够
         test-on-borrow: false
-        
         # 归还时测试: 归还连接时测试
         # 建议: false，影响性能
         test-on-return: false
-        
         # ---------- 连接泄漏检测 ----------
         # 是否开启连接泄漏检测
         # 当连接被获取后超过 remove-abandoned-timeout 未归还，会被强制回收
         # 建议: 开发环境开启，生产环境根据需要开启
         remove-abandoned: true
-        
         # 连接泄漏超时时间 (秒)
         # 超过此时间未归还的连接会被强制回收
         # 建议: 1800 (30分钟)
         remove-abandoned-timeout: 1800
-        
         # 连接泄漏时是否记录日志
         log-abandoned: true
-        
         # ---------- 性能监控配置 ----------
         # 是否开启 SQL 监控统计
         # 统计 SQL 执行时间、执行次数、慢 SQL 等
         filters: stat,wall,slf4j
-        
         # 合并多个数据源的监控数据
         use-global-data-source-stat: true
-        
         # ---------- SQL 监控配置 ----------
         # 慢 SQL 记录阈值 (毫秒)
         # 超过此时间的 SQL 会被记录为慢 SQL
         # 建议: 3000 (3秒)，根据业务调整
         connection-properties: druid.stat.slowSqlMillis=3000;druid.stat.logSlowSql=true
-        
         # ---------- Web 监控配置 ----------
         # Druid 监控页面配置
         stat-view-servlet:
           # 是否启用监控页面
           enabled: true
-          
           # 监控页面访问路径
           # 访问地址: http://localhost:端口/druid/index.html
           url-pattern: /druid/*
-          
           # 监控页面登录用户名
           login-username: admin
-          
           # 监控页面登录密码
           login-password: admin123
-          
           # 是否允许重置统计数据
           reset-enable: true
-          
           # IP 白名单 (不配置或为空则允许所有)
           # 多个 IP 用逗号分隔，支持 IP 段
           # allow: 127.0.0.1,192.168.1.0/24
-          
           # IP 黑名单 (优先级高于白名单)
           # deny: 192.168.1.100
         
@@ -141,30 +117,23 @@ spring:
         web-stat-filter:
           # 是否启用 Web 统计
           enabled: true
-          
           # 拦截的 URL 模式
           url-pattern: /*
-          
           # 排除的 URL 模式 (不统计)
           exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-          
           # 是否启用 Session 统计
           session-stat-enable: true
-          
           # Session 统计的最大数量
           session-stat-max-count: 1000
-          
           # 配置 principalSessionName，使得 Druid 能够知道当前的用户是谁
           # 根据需要开启，需要登录后主体信息放到 Session 中
           # principal-session-name: user
-          
           # 配置 principalCookieName，使得 Druid 能够知道当前的用户是谁
           # principal-cookie-name: user
         
         # ---------- Spring 监控配置 ----------
         # AOP 监控 Spring Bean
         aop-patterns: com.junoyi.module.*.service.*
-        
         # ---------- 防火墙配置 ----------
         # SQL 防火墙配置 (防止 SQL 注入)
         wall:
@@ -172,14 +141,11 @@ spring:
           config:
             # 是否允许多条 SQL 一起执行
             multi-statement-allow: true
-            
             # 是否允许非基本语句的其他语句 (如 SHOW、DESC 等)
             none-base-statement-allow: true
-            
             # 检查 UPDATE 语句是否有 WHERE 条件
             # 防止全表更新
             update-where-none-check: true
-            
             # 检查 DELETE 语句是否有 WHERE 条件
             # 防止全表删除
             delete-where-none-check: true
