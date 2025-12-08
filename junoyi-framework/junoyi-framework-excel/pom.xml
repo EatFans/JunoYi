@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>com.junoyi</groupId>
-            <artifactId>junoyi-framework-core</artifactId>
+            <artifactId>junoyi-framework-json</artifactId>
         </dependency>
 
         <dependency>
