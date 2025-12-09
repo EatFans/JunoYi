@@ -19,6 +19,7 @@ public enum DataSourceType {
     /**
      * 日志库 - 用于日志存储
      */
+    LOG("log", "日志数据源"),
 
     /**
      * 报表库 - 用于报表查询
