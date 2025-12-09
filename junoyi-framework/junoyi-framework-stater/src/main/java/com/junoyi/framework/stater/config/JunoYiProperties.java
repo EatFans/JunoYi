@@ -37,12 +37,10 @@ public class JunoYiProperties {
      */
     private String registration;
 
-    private String logo;
-
     /**
-     * 服务器端口号
+     * 品牌logo
      */
-    private int port;
+    private String logo;
 
     public String getVersion() {
         return version;
@@ -92,12 +90,5 @@ public class JunoYiProperties {
         this.logo = logo;
     }
 
-    public int getPort(){
-        return port;
-    }
-
-    public void setPort(int port){
-        this.port = port;
-    }
 
 }
