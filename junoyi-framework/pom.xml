@@ -13,7 +13,6 @@
     <artifactId>junoyi-framework</artifactId>
     <packaging>pom</packaging>
 
-
     <modules>
         <module>junoyi-framework-core</module>
         <module>junoyi-framework-web</module>
@@ -25,6 +24,5 @@
         <module>junoyi-framework-json</module>
         <module>junoyi-framework-redis</module>
     </modules>
-
 
 </project>
