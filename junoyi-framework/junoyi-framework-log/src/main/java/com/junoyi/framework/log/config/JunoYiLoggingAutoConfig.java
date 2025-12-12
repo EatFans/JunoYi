@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.lang.NonNull;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * 日志自动配置类
@@ -19,6 +20,7 @@ import org.springframework.lang.NonNull;
  * @author Fan
  */
 @Configuration
+@EnableConfigurationProperties(JunoYiLogProperties.class)
 @AutoConfigureOrder(Integer.MIN_VALUE)
 public class JunoYiLoggingAutoConfig implements ApplicationContextAware, InitializingBean {
 

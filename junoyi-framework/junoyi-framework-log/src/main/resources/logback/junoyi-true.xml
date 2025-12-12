@@ -59,5 +59,4 @@
         <appender-ref ref="CONSOLE"/>
     </logger>
     
-    <!-- 注意：自定义包日志级别需要通过Java代码动态设置 -->
 </included>

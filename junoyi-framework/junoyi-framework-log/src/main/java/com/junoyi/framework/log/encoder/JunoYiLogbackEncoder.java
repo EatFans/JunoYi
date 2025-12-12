@@ -16,18 +16,17 @@ import java.time.format.DateTimeFormatter;
  */
 public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    
-    // 是否显示线程名
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private boolean showThreadName = true;
-    // 是否显示MDC上下文
     private boolean showMDC = true;
-    // 是否显示类名
     private boolean showClassName = true;
-    // 最长类名长度（用于格式化对齐）
     private int maxClassNameLength = 20;
-    // 是否启用彩色输出
     private boolean colorEnabled = true;
+    private int maxStackTraceLines = 8;
+    private int maxMdcProperties = 3;
+    private boolean simplifyPackageNames = true;
+    private java.util.Map<String, String> packageSimplifications = new java.util.LinkedHashMap<>();
+    private int maxThreadNameLength = 15;
 
     @Override
     public byte[] encode(ILoggingEvent event) {
@@ -52,7 +51,7 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
             String threadName = formatThread(event.getThreadName());
             sb.append(greenColor)
                     .append("(")
-                    .append(String.format("%-10s", threadName))
+                    .append(String.format("%-" + Math.max(1, maxThreadNameLength) + "s", threadName))
                     .append(") ")
                     .append(reset);
         }
@@ -170,31 +169,28 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
         if (loggerName == null) {
             return "";
         }
-        
-        // 移除前缀
-        String simplified = loggerName.replace("com.junoyi.", "");
-        
-        // 智能缩写
-        if (simplified.length() > 28) {
-            String[] parts = simplified.split("\\.");
-            if (parts.length > 2) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < parts.length - 1; i++) {
-                    if (parts[i].length() > 0) {
-                        sb.append(parts[i].charAt(0)).append(".");
+        String base = applyPackageSimplifications(loggerName);
+        if (simplifyPackageNames) {
+            String tmp = base.replace("com.junoyi.", "");
+            if (tmp.length() > 28) {
+                String[] parts = tmp.split("\\.");
+                if (parts.length > 2) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < parts.length - 1; i++) {
+                        if (parts[i].length() > 0) {
+                            sb.append(parts[i].charAt(0)).append(".");
+                        }
                     }
+                    sb.append(parts[parts.length - 1]);
+                    tmp = sb.toString();
                 }
-                sb.append(parts[parts.length - 1]);
-                simplified = sb.toString();
             }
+            base = tmp;
         }
-        
-        // 最终截断
-        if (simplified.length() > 28) {
-            simplified = simplified.substring(0, 25) + "...";
+        if (base.length() > 28) {
+            base = base.substring(0, 25) + "...";
         }
-        
-        return simplified;
+        return base;
     }
 
     /**
@@ -223,7 +219,8 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
                 .append("\n");
         
         ch.qos.logback.classic.spi.StackTraceElementProxy[] steArray = throwableProxy.getStackTraceElementProxyArray();
-        for (int i = 0; i < Math.min(steArray.length, 8); i++) {
+        int limit = maxStackTraceLines <= 0 ? steArray.length : Math.min(steArray.length, maxStackTraceLines);
+        for (int i = 0; i < limit; i++) {
             sb.append(redColor).append("│ ").append(reset)
                     .append("   at ")
                     .append(colorEnabled ? TerminalColor.CYAN : "")
@@ -232,12 +229,12 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
                     .append("\n");
         }
         
-        if (steArray.length > 8) {
+        if (maxStackTraceLines > 0 && steArray.length > maxStackTraceLines) {
             sb.append(redColor)
                     .append("│ ")
                     .append(yellowColor)
                     .append("   ... ")
-                    .append(steArray.length - 8)
+                    .append(steArray.length - maxStackTraceLines)
                     .append(" more")
                     .append(reset)
                     .append("\n");
@@ -258,7 +255,7 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
         return LocalDateTime.ofInstant(
             java.time.Instant.ofEpochMilli(timestamp), 
             java.time.ZoneId.systemDefault()
-        ).format(DATE_FORMATTER);
+        ).format(dateFormatter);
     }
 
     /**
@@ -273,8 +270,12 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
             case "main": return "main";
             case "restartedMain": return "main";
             default:
-                // 如果太长则截取后12个字符
-                return threadName.length() > 12 ? "..." + threadName.substring(threadName.length() - 9) : threadName;
+                int width = Math.max(4, maxThreadNameLength);
+                if (threadName.length() > width) {
+                    int tail = Math.max(1, width - 3);
+                    return "..." + threadName.substring(threadName.length() - tail);
+                }
+                return threadName;
         }
     }
 
@@ -289,7 +290,7 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         mdcMap.entrySet().stream()
-                .limit(3) // 最多显示3个MDC属性
+                .limit(Math.max(0, maxMdcProperties))
                 .forEach(entry -> sb.append(entry.getKey()).append("=").append(entry.getValue()).append(","));
         
         if (sb.length() > 1) {
@@ -341,6 +342,59 @@ public class JunoYiLogbackEncoder extends EncoderBase<ILoggingEvent> {
         this.colorEnabled = colorEnabled;
     }
 
+    public void setDateTimePattern(String pattern) {
+        if (pattern != null && !pattern.isEmpty()) {
+            this.dateFormatter = DateTimeFormatter.ofPattern(pattern);
+        }
+    }
+
+    public void setMaxStackTraceLines(int maxStackTraceLines) {
+        this.maxStackTraceLines = maxStackTraceLines;
+    }
+
+    public void setMaxMdcProperties(int maxMdcProperties) {
+        this.maxMdcProperties = maxMdcProperties;
+    }
+
+    public void setSimplifyPackageNames(boolean simplifyPackageNames) {
+        this.simplifyPackageNames = simplifyPackageNames;
+    }
+
+    public void setPackageSimplifications(String mapping) {
+        if (mapping == null || mapping.trim().isEmpty()) {
+            return;
+        }
+        String[] pairs = mapping.split(",");
+        for (String p : pairs) {
+            String[] kv = p.split(":");
+            if (kv.length == 2) {
+                packageSimplifications.put(kv[0].trim(), kv[1].trim());
+            }
+        }
+    }
+
+    public void setMaxThreadNameLength(int maxThreadNameLength) {
+        this.maxThreadNameLength = maxThreadNameLength;
+    }
+
+    private String applyPackageSimplifications(String loggerName) {
+        if (loggerName == null) {
+            return "";
+        }
+        String result = loggerName;
+        if (simplifyPackageNames && !packageSimplifications.isEmpty()) {
+            for (java.util.Map.Entry<String, String> e : packageSimplifications.entrySet()) {
+                String key = e.getKey();
+                String val = e.getValue();
+                if (result.startsWith(key + ".")) {
+                    result = val + result.substring(key.length());
+                } else if (result.equals(key)) {
+                    result = val;
+                }
+            }
+        }
+        return result;
+    }
     @Override
     public byte[] headerBytes() { 
         return null; 
