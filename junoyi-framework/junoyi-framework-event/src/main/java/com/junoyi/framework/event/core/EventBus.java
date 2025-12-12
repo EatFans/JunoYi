@@ -4,10 +4,7 @@ import com.junoyi.framework.log.core.JunoYiLog;
 import com.junoyi.framework.log.core.JunoYiLogFactory;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -71,7 +68,8 @@ public class EventBus {
 
     /**
      * 触发事件，调用所有注册的事件处理器
-     * 处理器根据是否标记为异步来决定同步或异步执行
+     * 处理器严格按照优先级从高到低顺序执行
+     * 异步处理器会在独立线程中执行，但会等待其完成后再执行下一个处理器
      *
      * @param event 要触发的事件对象
      * @param <T> 事件类型
@@ -81,11 +79,19 @@ public class EventBus {
         List<RegisteredHandler> handlers = registry.getHandlers(event.getClass());
         int listenerCount = handlers.size();
         log.info("EventTrigger", "Event="+event.getClass().getSimpleName() + " | " + "ListenerCount=" + listenerCount );
-        // 遍历并调用每个处理器的方法
+        // 按优先级顺序遍历并调用每个处理器的方法
         for (RegisteredHandler handler : handlers){
             if (handler.async()) {
-                // 异步执行
-                asyncExecutor.submit(() -> executeHandler(handler, event));
+                // 异步执行，但等待完成以保证顺序
+                Future<?> future = asyncExecutor.submit(() -> executeHandler(handler, event));
+                try {
+                    future.get(); // 等待异步任务完成
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    log.error("EventHandlerInterrupted", "Handler execution was interrupted: " + handler.method().getName(), e);
+                } catch (ExecutionException e) {
+                    log.error("EventHandlerExecutionError", "Handler execution failed: " + handler.method().getName(), e.getCause());
+                }
             } else {
                 // 同步执行
                 executeHandler(handler, event);
@@ -95,6 +101,7 @@ public class EventBus {
 
     /**
      * 异步触发事件，强制将所有处理器以异步方式提交到线程池中执行
+     * 所有处理器按优先级顺序执行，每个处理器等待前一个完成后再执行
      *
      * @param event 要触发的事件对象
      * @param <T> 事件类型
@@ -104,9 +111,17 @@ public class EventBus {
         List<RegisteredHandler> handlers = registry.getHandlers(event.getClass());
         int listenerCount = handlers.size();
         log.info("AsyncEventTrigger", "Event="+event.getClass().getSimpleName() + " | " + "ListenerCount=" + listenerCount );
-        // 所有处理器都异步执行
+        // 所有处理器都异步执行，但按优先级顺序等待完成
         for (RegisteredHandler handler : handlers){
-            asyncExecutor.submit(() -> executeHandler(handler, event));
+            Future<?> future = asyncExecutor.submit(() -> executeHandler(handler, event));
+            try {
+                future.get(); // 等待当前处理器完成
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error("AsyncEventHandlerInterrupted", "Async handler execution was interrupted: " + handler.method().getName(), e);
+            } catch (ExecutionException e) {
+                log.error("AsyncEventHandlerExecutionError", "Async handler execution failed: " + handler.method().getName(), e.getCause());
+            }
         }
     }
 

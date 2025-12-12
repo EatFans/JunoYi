@@ -2,7 +2,6 @@ package com.junoyi.system;
 
 import com.junoyi.framework.event.core.EventBus;
 import com.junoyi.system.event.TestEvent;
-import com.junoyi.system.listener.TestEventListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-
     @GetMapping("/event")
     public void testEvent(){
 
+        // 执行某些逻辑
 
 
         // 触发事件

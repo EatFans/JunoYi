@@ -15,9 +15,14 @@ public class TestEventListener implements Listener {
      * 事件监听器
      * @param event
      */
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     public void onTestEvent(TestEvent event){
 
-        System.out.println("事件已经触发:  " + event.getTest());
+        System.out.println("321321321312312");
+        System.out.println("事件已经触发42432432432432:  " + event.getTest());
+        System.out.println("事件已经触发42432432432432:  " + event.getTest());
+        System.out.println("事件已经触发42432432432432:  " + event.getTest());
     }
+
+
 }
