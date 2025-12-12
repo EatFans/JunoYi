@@ -21,4 +21,9 @@ public @interface EventHandler {
      * 事件监听处理优先级（默认优先级0）
      */
     EventPriority priority() default EventPriority.NORMAL;
+
+    /**
+     * 是否异步执行（默认同步）
+     */
+    boolean async() default false;
 }

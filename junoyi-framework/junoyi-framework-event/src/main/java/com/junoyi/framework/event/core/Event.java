@@ -1,4 +1,4 @@
-package com.junoyi.framework.event.event;
+package com.junoyi.framework.event.core;
 
 /**
  * 事件接口

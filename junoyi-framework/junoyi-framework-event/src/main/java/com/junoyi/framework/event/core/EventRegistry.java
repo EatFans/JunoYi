@@ -1,7 +1,6 @@
 package com.junoyi.framework.event.core;
 
 import com.junoyi.framework.event.annotation.EventHandler;
-import com.junoyi.framework.event.event.Event;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -39,7 +38,8 @@ public class EventRegistry {
             RegisteredHandler handler = new RegisteredHandler(
                     listener,
                     method,
-                    annotation.priority()
+                    annotation.priority(),
+                    annotation.async()
             );
 
             handlers.computeIfAbsent(eventType, k -> new ArrayList<>()).add(handler);
