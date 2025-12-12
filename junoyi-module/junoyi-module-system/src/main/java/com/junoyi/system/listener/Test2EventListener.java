@@ -10,7 +10,6 @@ public class Test2EventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTestEven32t(TestEvent event){
-
-        System.out.println("测试事件被触发 321321");
+        System.out.println("优先级 最高");
     }
 }
