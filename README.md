@@ -8,7 +8,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-3.5.9-blue.svg)](https://baomidou.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.5.2-green.svg)](https://github.com/Juno-Yi/JunoYi)
+[![Version](https://img.shields.io/badge/Version-0.5.3-green.svg)](https://github.com/Juno-Yi/JunoYi)
 
 ## JunoYi 后台管理系统脚手架框架
 **一个安全内建、简洁优雅的 Java 企业级开发框架**
@@ -23,7 +23,7 @@
 
 > **🎉 正式版本发布**
 >
-> 当前版本为 **0.5.2**，已完成全面测试并正式发布，可用于生产环境。
+> 当前版本为 **0.5.3**，已完成全面测试并正式发布，可用于生产环境。
 >
 > ✅ **版本特性**
 > - 核心功能完整稳定
@@ -49,11 +49,11 @@
 
 项目持续更新中，后续版本规划：
 
-| 版本     | 说明 | 状态     |
-|--------|------|--------|
-| 前后端分离版 | 当前版本，适合中小型项目 | 🚀 正式版 |
-| 多租户版   | 支持 SaaS 多租户架构 | 📋 开发中 |
-| 微服务版   | 基于 Spring Cloud 的分布式架构 | 📋 开发中 |
+| 版本     | 说明 | 状态      |
+|--------|------|---------|
+| 前后端分离版 | 当前版本，适合中小型项目 | 🚀 正式版  |
+| 多租户版   | 支持 SaaS 多租户架构 | 📋 即将上线 |
+| 微服务版   | 基于 Spring Cloud 的分布式架构 | 📋 规划中  |
 
 📝 更新日志请查看文档站：https://doc.framework.junoyi.com/changelog/standalone.html
 
