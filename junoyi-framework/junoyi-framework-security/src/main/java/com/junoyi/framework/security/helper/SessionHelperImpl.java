@@ -13,11 +13,11 @@ import com.junoyi.framework.security.properties.SecurityProperties;
 import com.junoyi.framework.security.module.UserSession;
 import com.junoyi.framework.security.module.TokenPair;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RSet;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.junoyi.framework.core.constant.CacheConstants.*;
 
@@ -146,42 +146,30 @@ public class SessionHelperImpl implements SessionHelper {
 
     /**
      * 添加 tokenId 到用户会话索引
+     * 使用 Redis Set 的原子操作避免并发问题
      */
     private void addToUserSessionIndex(Long userId, String tokenId) {
         String userSessionsKey = USER_SESSIONS + userId;
-        Set<String> existingTokenIds = RedisUtils.getCacheSet(userSessionsKey);
         
-        if (existingTokenIds == null) {
-            existingTokenIds = new HashSet<>();
-        } else {
-            // 创建可修改的副本
-            existingTokenIds = new HashSet<>(existingTokenIds);
-        }
-        
-        existingTokenIds.add(tokenId);
-        RedisUtils.deleteObject(userSessionsKey);
-        RedisUtils.setCacheSet(userSessionsKey, existingTokenIds);
+        // 【修复】使用 Redis Set 的原子添加操作，避免并发问题
+        RSet<String> tokenIdSet = RedisUtils.getClient().getSet(userSessionsKey);
+        tokenIdSet.add(tokenId);
     }
 
     /**
      * 从用户会话索引中移除 tokenId
+     * 使用 Redis Set 的原子操作避免并发问题
      */
     private void removeFromUserSessionIndex(Long userId, String tokenId) {
         String userSessionsKey = USER_SESSIONS + userId;
-        Set<String> existingTokenIds = RedisUtils.getCacheSet(userSessionsKey);
         
-        if (existingTokenIds == null || existingTokenIds.isEmpty())
-            return;
+        // 【修复】使用 Redis Set 的原子删除操作，避免并发问题
+        RSet<String> tokenIdSet = RedisUtils.getClient().getSet(userSessionsKey);
+        tokenIdSet.remove(tokenId);
         
-        // 创建可修改的副本
-        existingTokenIds = new HashSet<>(existingTokenIds);
-        existingTokenIds.remove(tokenId);
-        
-        if (existingTokenIds.isEmpty()) {
+        // 如果 Set 为空，删除整个键
+        if (tokenIdSet.isEmpty()) {
             RedisUtils.deleteObject(userSessionsKey);
-        } else {
-            RedisUtils.deleteObject(userSessionsKey);
-            RedisUtils.setCacheSet(userSessionsKey, existingTokenIds);
         }
     }
 
@@ -396,8 +384,16 @@ public class SessionHelperImpl implements SessionHelper {
             return false;
 
         UserSession session = getSessionByTokenId(tokenId);
-        if (session == null)
-            return false;
+        if (session == null) {
+            // 如果主 Session 已过期，尝试从 RefreshToken 白名单获取
+            String refreshKey = REFRESH_TOKEN + tokenId;
+            session = RedisUtils.getCacheObject(refreshKey);
+            if (session == null) {
+                log.warn("SessionUpdateFailed", "会话不存在 | tokenId: " + tokenId.substring(0, 8) + "...");
+                return false;
+            }
+            log.info("SessionRecoveredForUpdate", "从 RefreshToken 白名单恢复会话用于更新 | tokenId: " + tokenId.substring(0, 8) + "...");
+        }
 
         // 更新会话信息
         session.setUserName(loginUser.getUserName());
@@ -411,9 +407,17 @@ public class SessionHelperImpl implements SessionHelper {
         session.setRoles(loginUser.getRoles());
         session.setLastAccessTime(new Date());
 
-        // 保存到 Redis（保留原 TTL）
+        // 保存到主会话（保留原 TTL）
         String sessionKey = SESSION + tokenId;
         RedisUtils.setCacheObject(sessionKey, session, true);
+
+        // 同步更新 RefreshToken 白名单（保留原 TTL）
+        // 这样即使主 Session 过期，刷新 Token 时也能获取到最新的权限数据
+        String refreshKey = REFRESH_TOKEN + tokenId;
+        if (RedisUtils.isExistsObject(refreshKey)) {
+            RedisUtils.setCacheObject(refreshKey, session, true);
+            log.debug("RefreshTokenWhitelistUpdated", "RefreshToken 白名单已同步更新 | tokenId: " + tokenId.substring(0, 8) + "...");
+        }
 
         log.info("SessionUpdated", "会话更新成功 | 用户: " + loginUser.getUserName()
                 + " | tokenId: " + tokenId.substring(0, 8) + "...");

@@ -42,32 +42,44 @@ public class PermissionChangedListener {
      */
     @EventHandler(async = true)
     public void onPermissionChanged(PermissionChangedEvent event) {
-        log.info("PermissionSync", "收到权限变更事件 | 类型: " + event.getChangeType() 
-                + " | 资源ID: " + event.getResourceId());
+        try {
+            log.info("PermissionSync", "收到权限变更事件 | 类型: " + event.getChangeType() 
+                    + " | 资源ID: " + event.getResourceId());
 
-        Set<Long> affectedUserIds = event.getAffectedUserIds();
-        
-        // 如果没有指定受影响的用户，根据变更类型查询
-        if (affectedUserIds == null || affectedUserIds.isEmpty()) {
-            affectedUserIds = findAffectedUsers(event.getChangeType(), event.getResourceId());
-        }
-
-        if (affectedUserIds.isEmpty()) {
-            log.info("PermissionSync", "没有受影响的在线用户");
-            return;
-        }
-
-        log.info("PermissionSync", "受影响用户数: " + affectedUserIds.size());
-
-        // 同步每个用户的会话
-        int syncCount = 0;
-        for (Long userId : affectedUserIds) {
-            if (syncUserSessions(userId)) {
-                syncCount++;
+            Set<Long> affectedUserIds = event.getAffectedUserIds();
+            
+            // 如果没有指定受影响的用户，根据变更类型查询
+            if (affectedUserIds == null || affectedUserIds.isEmpty()) {
+                affectedUserIds = findAffectedUsers(event.getChangeType(), event.getResourceId());
             }
-        }
 
-        log.info("PermissionSync", "权限同步完成 | 同步用户数: " + syncCount);
+            if (affectedUserIds.isEmpty()) {
+                log.info("PermissionSync", "没有受影响的在线用户");
+                return;
+            }
+
+            log.info("PermissionSync", "受影响用户数: " + affectedUserIds.size() 
+                    + " | 用户ID列表: " + affectedUserIds);
+
+            // 同步每个用户的会话
+            int syncCount = 0;
+            int failCount = 0;
+            for (Long userId : affectedUserIds) {
+                try {
+                    if (syncUserSessions(userId)) {
+                        syncCount++;
+                    }
+                } catch (Exception e) {
+                    failCount++;
+                    log.error("PermissionSyncError", "同步用户会话失败 | userId: " + userId, e);
+                }
+            }
+
+            log.info("PermissionSync", "权限同步完成 | 成功: " + syncCount + " | 失败: " + failCount);
+        } catch (Exception e) {
+            log.error("PermissionSyncFatalError", "权限变更事件处理失败 | 类型: " + event.getChangeType() 
+                    + " | 资源ID: " + event.getResourceId(), e);
+        }
     }
 
     /**
@@ -193,23 +205,45 @@ public class PermissionChangedListener {
         // 获取用户所有活跃会话
         List<UserSession> sessions = sessionHelper.getUserSessions(userId);
         if (sessions.isEmpty()) {
+            log.debug("PermissionSync", "用户无活跃会话 | userId: " + userId);
             return false;
         }
+
+        log.info("PermissionSync", "开始同步用户会话 | userId: " + userId 
+                + " | 会话数: " + sessions.size());
 
         // 重新加载用户权限
         LoginUser updatedLoginUser = reloadUserPermissions(userId, sessions.get(0));
         if (updatedLoginUser == null) {
+            log.warn("PermissionSync", "重新加载用户权限失败 | userId: " + userId);
             return false;
         }
 
         // 更新所有会话
+        int successCount = 0;
         for (UserSession session : sessions) {
-            sessionHelper.updateSession(session.getSessionId(), updatedLoginUser);
+            try {
+                boolean updated = sessionHelper.updateSession(session.getSessionId(), updatedLoginUser);
+                if (updated) {
+                    successCount++;
+                    log.debug("PermissionSync", "会话更新成功 | userId: " + userId 
+                            + " | sessionId: " + session.getSessionId().substring(0, 8) + "...");
+                } else {
+                    log.warn("PermissionSync", "会话更新失败 | userId: " + userId 
+                            + " | sessionId: " + session.getSessionId().substring(0, 8) + "...");
+                }
+            } catch (Exception e) {
+                log.error("PermissionSync", "会话更新异常 | userId: " + userId 
+                        + " | sessionId: " + session.getSessionId().substring(0, 8) + "...", e);
+            }
         }
 
         log.info("PermissionSync", "用户会话权限已更新 | userId: " + userId 
-                + " | 会话数: " + sessions.size());
-        return true;
+                + " | 总会话数: " + sessions.size() 
+                + " | 成功: " + successCount 
+                + " | 失败: " + (sessions.size() - successCount));
+        
+        return successCount > 0;
     }
 
     /**
