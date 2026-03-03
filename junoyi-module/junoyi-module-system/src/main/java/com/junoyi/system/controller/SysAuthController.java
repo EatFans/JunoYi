@@ -42,6 +42,22 @@ public class SysAuthController extends BaseController {
     @Autowired(required = false)
     private CaptchaHelper captchaHelper;
 
+    @Autowired(required = false)
+    private CaptchaProperties captchaProperties;
+
+    /**
+     * 获取验证码配置信息
+     * 前端通过此接口判断是否需要显示验证码
+     *
+     * @return R<Map<String, Object>> 验证码配置信息
+     */
+    @GetMapping("/captcha/config")
+    public R<java.util.Map<String, Object>> getCaptchaConfig() {
+        boolean enabled = captchaHelper != null && captchaProperties != null && captchaProperties.isEnable();
+        java.util.Map<String, Object> config = new java.util.HashMap<>();
+        config.put("enabled", enabled);
+        return R.ok(config);
+    }
     /**
      * 用户登录接口
      * 处理用户登录请求，验证用户身份并返回认证结果

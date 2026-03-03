@@ -21,12 +21,16 @@ public class NoCaptchaHelper implements CaptchaHelper {
 
     @Override
     public CaptchaResult generate() {
-        throw new UnsupportedOperationException("验证码功能已关闭");
+        log.warn("[Captcha] Attempted to generate captcha while captcha is disabled");
+        // 返回空结果，不抛异常
+        return null;
     }
 
     @Override
     public CaptchaResult generate(CaptchaType type) {
-        throw new UnsupportedOperationException("验证码功能已关闭");
+        log.warn("[Captcha] Attempted to generate captcha while captcha is disabled");
+        // 返回空结果，不抛异常
+        return null;
     }
 
     @Override

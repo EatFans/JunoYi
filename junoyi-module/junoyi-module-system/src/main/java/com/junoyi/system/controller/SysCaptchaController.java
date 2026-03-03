@@ -50,6 +50,11 @@ public class SysCaptchaController {
      */
     @GetMapping("/image")
     public R<CaptchaResult> getImageCaptcha() {
+        // 检查验证码是否启用
+        boolean enabled = captchaHelper != null && captchaProperties != null && captchaProperties.isEnable();
+        if (!enabled) {
+            return R.fail("验证码功能已关闭");
+        }
         return R.ok(captchaService.getImageCaptcha());
     }
 
@@ -58,6 +63,11 @@ public class SysCaptchaController {
      */
     @PostMapping("/validate")
     public R<Boolean> validate(@RequestParam String captchaId, @RequestParam String code) {
+        // 检查验证码是否启用
+        boolean enabled = captchaHelper != null && captchaProperties != null && captchaProperties.isEnable();
+        if (!enabled) {
+            return R.ok(true); 
+        }
         return R.ok(captchaService.validate(captchaId, code));
     }
 
