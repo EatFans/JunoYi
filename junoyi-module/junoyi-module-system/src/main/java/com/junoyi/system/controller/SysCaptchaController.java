@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 验证码控制器
  *
@@ -40,7 +43,7 @@ public class SysCaptchaController {
     @GetMapping("/config")
     public R<java.util.Map<String, Object>> getCaptchaConfig() {
         boolean enabled = captchaHelper != null && captchaProperties != null && captchaProperties.isEnable();
-        java.util.Map<String, Object> config = new java.util.HashMap<>();
+        Map<String, Object> config = new HashMap<>();
         config.put("enabled", enabled);
         return R.ok(config);
     }

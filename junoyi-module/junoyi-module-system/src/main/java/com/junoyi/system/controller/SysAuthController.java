@@ -39,25 +39,13 @@ public class SysAuthController extends BaseController {
     private final AuthHelper authHelper;
     private final LoginConverter loginConverter;
 
-    @Autowired(required = false)
-    private CaptchaHelper captchaHelper;
-
-    @Autowired(required = false)
-    private CaptchaProperties captchaProperties;
-
     /**
-     * 获取验证码配置信息
-     * 前端通过此接口判断是否需要显示验证码
-     *
-     * @return R<Map<String, Object>> 验证码配置信息
+     * 这里需要通过注解进行注入，声明这个依赖bean注入是可选的
+     * 如果当关闭验证码功能，这里就不需要注入bean，如果开启验证码功能就注入bean
      */
-    @GetMapping("/captcha/config")
-    public R<java.util.Map<String, Object>> getCaptchaConfig() {
-        boolean enabled = captchaHelper != null && captchaProperties != null && captchaProperties.isEnable();
-        java.util.Map<String, Object> config = new java.util.HashMap<>();
-        config.put("enabled", enabled);
-        return R.ok(config);
-    }
+    @Autowired(required = false)
+    private final CaptchaHelper captchaHelper;
+
     /**
      * 用户登录接口
      * 处理用户登录请求，验证用户身份并返回认证结果
