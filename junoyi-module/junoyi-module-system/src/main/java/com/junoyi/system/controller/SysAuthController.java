@@ -1,6 +1,7 @@
 package com.junoyi.system.controller;
 
 import com.junoyi.framework.captcha.helper.CaptchaHelper;
+import com.junoyi.framework.captcha.properties.CaptchaProperties;
 import com.junoyi.framework.log.core.JunoYiLog;
 import com.junoyi.framework.log.core.JunoYiLogFactory;
 import com.junoyi.framework.web.domain.BaseController;
@@ -18,6 +19,7 @@ import com.junoyi.system.domain.vo.AuthVO;
 import com.junoyi.system.domain.vo.UserInfoVO;
 import com.junoyi.system.service.ISysAuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,9 +36,11 @@ public class SysAuthController extends BaseController {
     private final JunoYiLog log = JunoYiLogFactory.getLogger(SysAuthController.class);
 
     private final ISysAuthService sysAuthService;
-    private final CaptchaHelper captchaHelper;
     private final AuthHelper authHelper;
     private final LoginConverter loginConverter;
+
+    @Autowired(required = false)
+    private CaptchaHelper captchaHelper;
 
     /**
      * 用户登录接口
@@ -47,8 +51,8 @@ public class SysAuthController extends BaseController {
      */
     @PostMapping("/login")
     public R<AuthVO> login(@RequestBody LoginDTO loginDTO) {
-        // 验证码校验
-        if (!StringUtils.isBlank(loginDTO.getCaptchaId())) {
+        // 验证码校验（仅在验证码功能启用时）
+        if (captchaHelper != null && !StringUtils.isBlank(loginDTO.getCaptchaId())) {
             if (StringUtils.isBlank(loginDTO.getCode()))
                 throw new CaptchaInvalidException("验证码不能为空");
             // 验证码验证（validate 返回 false 表示验证失败）
