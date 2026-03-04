@@ -28,6 +28,7 @@
         <hutool.version>5.8.23</hutool.version>
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <easyexcel.version>3.2.1</easyexcel.version>
+        <poi.version>5.2.3</poi.version>
         <redisson.version>3.20.1</redisson.version>
         <lock4j.version>2.2.4</lock4j.version>
         <!-- Apache Commons Compress 版本 -->
@@ -219,6 +220,12 @@
                         <artifactId>poi-ooxml-schemas</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!--      Apache POI      -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
             </dependency>
 
             <!--      Redisson      -->
