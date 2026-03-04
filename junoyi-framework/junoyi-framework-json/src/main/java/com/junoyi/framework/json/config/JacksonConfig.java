@@ -49,6 +49,8 @@ public class JacksonConfig {
             javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
             // 使用 modulesToInstall 追加模块，而不是 modules 覆盖
             builder.modulesToInstall(javaTimeModule);
+            // 配置 java.util.Date 的日期格式
+            builder.simpleDateFormat("yyyy-MM-dd HH:mm:ss");
             builder.timeZone(TimeZone.getDefault());
             log.info("Initialization jackson configuration completed.");
         };
