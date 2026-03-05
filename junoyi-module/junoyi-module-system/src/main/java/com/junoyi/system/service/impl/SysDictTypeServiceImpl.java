@@ -43,27 +43,6 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     private final SysDictApiImpl sysDictApi;
 
     /**
-     * 分页查询字典类型列表
-     *
-     * @param queryDTO 查询条件DTO
-     * @return 分页结果对象
-     */
-    @Override
-    public PageResult<SysDictTypeVO> getDictTypeList(SysDictTypeQueryDTO queryDTO) {
-        LambdaQueryWrapper<SysDictType> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(queryDTO.getDictName()), SysDictType::getDictName, queryDTO.getDictName())
-                .like(StringUtils.isNotBlank(queryDTO.getDictType()), SysDictType::getDictType, queryDTO.getDictType())
-                .eq(StringUtils.isNotBlank(queryDTO.getStatus()), SysDictType::getStatus, queryDTO.getStatus())
-                .orderByDesc(SysDictType::getCreateTime);
-
-        Page<SysDictType> page = new Page<>(queryDTO.getCurrent(), queryDTO.getSize());
-        Page<SysDictType> resultPage = sysDictTypeMapper.selectPage(page, wrapper);
-
-        List<SysDictTypeVO> voList = sysDictTypeConverter.toVoList(resultPage.getRecords());
-        return PageResult.of(voList, resultPage.getTotal(), (int) resultPage.getCurrent(), (int) resultPage.getSize());
-    }
-
-    /**
      * 查询所有字典类型
      *
      * @return 字典类型列表

@@ -14,13 +14,6 @@ import java.util.List;
  */
 public interface ISysDictTypeService {
 
-    /**
-     * 分页查询字典类型列表
-     *
-     * @param queryDTO 查询条件DTO
-     * @return 分页结果对象
-     */
-    PageResult<SysDictTypeVO> getDictTypeList(SysDictTypeQueryDTO queryDTO);
 
     /**
      * 查询所有字典类型

@@ -39,17 +39,6 @@ public class SysDictTypeController extends BaseController {
     private final SysDictApiImpl sysDictApi;
 
     /**
-     * 分页查询字典类型列表
-     */
-    @Operation(summary = "获取字典类型列表", description = "分页查询字典类型列表")
-    @GetMapping("/list")
-    @PlatformScope(PlatformType.ADMIN_WEB)
-    @Permission(value = {"system.ui.dict.view", "system.api.dict.get.list"})
-    public R<PageResult<SysDictTypeVO>> getDictTypeList(SysDictTypeQueryDTO queryDTO) {
-        return R.ok(dictTypeService.getDictTypeList(queryDTO));
-    }
-
-    /**
      * 查询所有字典类型
      */
     @Operation(summary = "查询所有字典类型", description = "查询所有启用状态的字典类型")
