@@ -59,7 +59,7 @@
 | 多租户版   | 支持 SaaS 多租户架构 | 📋 即将上线 |
 | 微服务版   | 基于 Spring Cloud 的分布式架构 | 📋 规划中  |
 
-📝 更新日志请查看文档站：https://doc.framework.junoyi.com/changelog/standalone.html
+📝 更新日志请查看文档站：https://doc.framework.junoyi.com/changelog/java/standalone.html
 
 ---
 
