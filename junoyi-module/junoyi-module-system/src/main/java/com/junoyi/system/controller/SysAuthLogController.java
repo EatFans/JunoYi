@@ -11,6 +11,7 @@ import com.junoyi.framework.security.enums.PlatformType;
 import com.junoyi.framework.web.domain.BaseController;
 import com.junoyi.system.domain.dto.SysAuthLogQueryDTO;
 import com.junoyi.system.domain.po.SysAuthLog;
+import com.junoyi.system.domain.vo.SysAuthLogVO;
 import com.junoyi.system.service.ISysAuthLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class SysAuthLogController extends BaseController {
     @GetMapping("/list")
     @Permission(value = {"system.ui.auth-log.view", "system.api.auth-log.get.list"})
     @PlatformScope(PlatformType.ADMIN_WEB)
-    public R<PageResult<?>> list(SysAuthLogQueryDTO queryDTO) {
+    public R<PageResult<SysAuthLogVO>> list(SysAuthLogQueryDTO queryDTO) {
         Page<SysAuthLog> page = buildPage();
         return R.ok(sysAuthLogService.getLoginLogList(queryDTO, page));
     }
