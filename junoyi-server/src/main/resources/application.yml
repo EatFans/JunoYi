@@ -146,9 +146,6 @@ junoyi:
       secret-key: minioadmin
       bucket-name: junoyi
 
-  # ==================== 事件配置 ====================
-  event:
-
   # ==================== Web 配置 ====================
   web:
     # 跨域
