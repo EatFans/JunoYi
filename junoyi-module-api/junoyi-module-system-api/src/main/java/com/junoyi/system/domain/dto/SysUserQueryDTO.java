@@ -6,7 +6,7 @@ import lombok.Data;
  * 系统用户查询数据传输对象
  * 用于封装系统用户查询时的查询条件
  *
- * @author Fam
+ * @author Fan
  */
 @Data
 public class SysUserQueryDTO {
