@@ -149,12 +149,6 @@
                 <artifactId>junoyi-module-system-api</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <dependency>
-                <groupId>com.junoyi</groupId>
-                <artifactId>junoyi-module-generation-api</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
 
             <!-- Module 功能模块 -->
             <dependency>
@@ -162,12 +156,6 @@
                 <artifactId>junoyi-module-system</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <dependency>
-                <groupId>com.junoyi</groupId>
-                <artifactId>junoyi-module-generation</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
 
             <!-- ========== 第三方依赖版本管理 ========== -->
             <!-- 七牛云 (可选) -->

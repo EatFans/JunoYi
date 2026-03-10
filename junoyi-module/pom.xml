@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>junoyi-module-system</module>
-        <module>junoyi-module-generation</module>
     </modules>
 
     <dependencies>
