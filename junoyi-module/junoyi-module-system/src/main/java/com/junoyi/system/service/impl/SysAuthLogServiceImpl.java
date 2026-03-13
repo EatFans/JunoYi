@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.junoyi.framework.core.domain.page.PageResult;
+import com.junoyi.system.api.SysDictApi;
+import com.junoyi.system.constant.DictTypeConstants;
 import com.junoyi.system.domain.dto.SysAuthLogQueryDTO;
 import com.junoyi.system.domain.po.SysAuthLog;
 import com.junoyi.system.domain.vo.SysAuthLogVO;
+import com.junoyi.system.domain.vo.SysDictDataVO;
 import com.junoyi.system.mapper.SysAuthLogMapper;
 import com.junoyi.system.service.ISysAuthLogService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,13 +31,7 @@ import java.util.stream.Collectors;
 public class SysAuthLogServiceImpl implements ISysAuthLogService {
 
     private final SysAuthLogMapper sysAuthLogMapper;
-
-    private static final Map<String, String> LOGIN_TYPE_MAP = new HashMap<>();
-
-    static {
-        LOGIN_TYPE_MAP.put("password", "账号密码登录");
-        LOGIN_TYPE_MAP.put("wechat_work", "企业微信登录");
-    }
+    private final SysDictApi sysDictApi;
 
     /**
      * 分页查询登录日志
@@ -101,7 +96,10 @@ public class SysAuthLogServiceImpl implements ISysAuthLogService {
     private SysAuthLogVO convertToVO(SysAuthLog loginLog) {
         SysAuthLogVO vo = new SysAuthLogVO();
         BeanUtils.copyProperties(loginLog, vo);
-        vo.setLoginTypeName(LOGIN_TYPE_MAP.getOrDefault(loginLog.getLoginType(), loginLog.getLoginType()));
+
+        String loginType = loginLog.getLoginType();
+        SysDictDataVO loginTypeDict = sysDictApi.getDictItem(DictTypeConstants.SYS_LOGIN_TYPE, loginType);
+        vo.setLoginTypeName(loginTypeDict != null ? loginTypeDict.getDictLabel() : loginType);
         return vo;
     }
 }
