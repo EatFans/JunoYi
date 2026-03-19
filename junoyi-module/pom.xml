@@ -31,7 +31,10 @@
                     <source>21</source>
                     <target>21</target>
                     <encoding>UTF-8</encoding>
+                    <!-- 禁用增量编译，确保 MapStruct 每次都重新生成 -->
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
                     <annotationProcessorPaths>
+                        <!-- Lombok 必须在 MapStruct 之前 -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
@@ -51,6 +54,8 @@
                     <compilerArgs>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
                         <arg>-Amapstruct.unmappedTargetPolicy=IGNORE</arg>
+                        <!-- 强制重新处理所有注解 -->
+                        <arg>-proc:full</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
