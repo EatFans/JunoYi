@@ -18,12 +18,5 @@
             <groupId>com.junoyi</groupId>
             <artifactId>junoyi-framework-boot-starter</artifactId>
         </dependency>
-
-        <!-- Lombok 注解需要在编译类路径可见 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>
