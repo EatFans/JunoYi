@@ -143,13 +143,6 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!-- Module API 模块 -->
-            <dependency>
-                <groupId>com.junoyi</groupId>
-                <artifactId>junoyi-module-system-api</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
             <!-- Module 功能模块 -->
             <dependency>
                 <groupId>com.junoyi</groupId>

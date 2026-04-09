@@ -2,7 +2,7 @@ package com.junoyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.junoyi.system.domain.po.SysDept;
-import org.mapstruct.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 系统部门数据访问层接口
