@@ -29,6 +29,7 @@
         <module>junoyi-framework-captcha</module>
         <module>junoyi-framework-quartz</module>
         <module>junoyi-framework-api-doc</module>
+        <module>junoyi-framework-wework</module>
     </modules>
 
 </project>

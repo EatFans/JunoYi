@@ -257,6 +257,26 @@ junoyi:
       # 验证码类型: math(数学运算) / char(字符)
       code-type: math
 
+  # ==================== 企业微信配置 ====================
+  # 如果要使用企业微信支持请先将junoyi-framework-boot-starter模块中的junoyi-framework-wework注释去除
+  # 刷新maven，修改好配置文件，业务模块只要统一类似system模块引用junoyi-framework-boot-starter模块即可使用。
+  # 使用方法：
+  # 1、业务里直接注入 WxCpService 或 WeWorkClient，
+  # 2、后续会持续更新相关的Helper工具，可以查看junoyi-framework-wework模块helper包下的类查看方法如何使用
+  wework:
+    # 企业ID
+    corp-id: wwxxxxxx
+    # 应用AgentId
+    agent-id: 1000002
+    # 应用Secret
+    secret: xxxxx
+    # OAuth回调地址
+    redirect-uri: https://demo.junoyi.com/#/auth/wework/callback
+    # token 存储方式：memory / redis
+    token-store-type: redis
+    # Redis 中的 key 前缀
+    redis-key-prefix: junoyi:wework:cp
+
   # ==================== 安全验证配置 ====================
   security:
     # api 接口加密 (建议: 开发环境将接口加密关闭方便调试，生产环境开启保证安全)
