@@ -110,7 +110,7 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
         calendar.put("description", request.getDescription());
         calendar.put("start_time", request.getStartTime());
         calendar.put("end_time", request.getEndTime());
-        calendar.put("admins", buildUserObjects(List.of(request.getOrganizer())));
+        calendar.put("admins", buildAdminUsers(request.getOrganizer()));
         calendar.put("attendees", buildUserObjects(request.getAttendees()));
         if (StringUtils.hasText(request.getRemarks())) calendar.put("remarks", request.getRemarks());
         return Map.of("schedule", calendar);
@@ -189,6 +189,13 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
         detail.setStartTime(toLong(scheduleMap.get("start_time")));
         detail.setEndTime(toLong(scheduleMap.get("end_time")));
         return detail;
+    }
+
+    private List<String> buildAdminUsers(String organizer) {
+        if (!StringUtils.hasText(organizer)) {
+            return List.of();
+        }
+        return List.of(organizer);
     }
 
     private List<Map<String, String>> buildUserObjects(List<String> userIds) {
