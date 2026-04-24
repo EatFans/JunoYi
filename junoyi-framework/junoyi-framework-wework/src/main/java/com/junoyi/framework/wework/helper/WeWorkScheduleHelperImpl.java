@@ -81,7 +81,7 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
             throw new WeWorkException("企业微信日程ID不能为空");
         }
         String url = BASE_URL + "/get?access_token=" + getAccessToken();
-        String body = toJson(Map.of("schedule_id", scheduleId));
+        String body = toJson(Map.of("schedule_id_list", List.of(scheduleId)));
         Map<String, Object> response = post(url, body, new TypeReference<Map<String, Object>>() {});
         validateResponse((Integer) response.get("errcode"), (String) response.get("errmsg"), "查询日程失败");
         return parseDetail(response);
@@ -172,8 +172,23 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
     }
 
     private WeWorkScheduleDetail parseDetail(Map<String, Object> response) {
+        Map<?, ?> scheduleMap = null;
         Object scheduleObj = response.get("schedule");
-        if (!(scheduleObj instanceof Map<?, ?> scheduleMap)) {
+        if (scheduleObj instanceof Map<?, ?> map) {
+            scheduleMap = map;
+        }
+
+        if (scheduleMap == null) {
+            Object scheduleListObj = response.get("schedule_list");
+            if (scheduleListObj instanceof List<?> scheduleList && !scheduleList.isEmpty()) {
+                Object first = scheduleList.get(0);
+                if (first instanceof Map<?, ?> firstMap) {
+                    scheduleMap = firstMap;
+                }
+            }
+        }
+
+        if (scheduleMap == null) {
             WeWorkScheduleDetail detail = new WeWorkScheduleDetail();
             detail.setRaw(response);
             return detail;
