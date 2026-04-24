@@ -1,7 +1,10 @@
 package com.junoyi.framework.wework.core;
 
+import com.junoyi.framework.log.core.JunoYiLog;
+import com.junoyi.framework.log.core.JunoYiLogFactory;
 import com.junoyi.framework.wework.properties.WeWorkProperties;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.api.WxCpMessageService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
 
@@ -15,8 +18,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class WeWorkClient {
 
+    private final JunoYiLog log = JunoYiLogFactory.getLogger(WeWorkClient.class);
+    private static final int MAX_RETRY_TIMES = 3;
+
+
     private final WxCpService wxCpService;
     private final WeWorkProperties properties;
+
+
 
     public WeWorkClient(WxCpService wxCpService, WeWorkProperties properties) {
         this.wxCpService = wxCpService;
@@ -66,8 +75,31 @@ public class WeWorkClient {
         return wxCpService;
     }
 
+    /**
+     * 获取企业微信消息业务
+     */
+    public WxCpMessageService getMessageService(){
+        return wxCpService.getMessageService();
+    }
+
     private String urlEncode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 获取企业微信AccessToken
+     */
+    public String getAccessToken() {
+        WxErrorException lastException = null;
+        for (int i = 1; i <= MAX_RETRY_TIMES; i++) {
+            try {
+                return wxCpService.getAccessToken(i > 1);
+            } catch (WxErrorException ex) {
+                lastException = ex;
+                log.warn("获取企业微信 accessToken 失败，第{}次重试", i, ex);
+            }
+        }
+        throw new RuntimeException("获取企业微信 accessToken 失败", lastException);
     }
 }
 
