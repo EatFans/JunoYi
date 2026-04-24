@@ -110,8 +110,8 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
         calendar.put("description", request.getDescription());
         calendar.put("start_time", request.getStartTime());
         calendar.put("end_time", request.getEndTime());
-        calendar.put("admins", List.of(request.getOrganizer()));
-        calendar.put("attendees", request.getAttendees());
+        calendar.put("admins", buildUserObjects(List.of(request.getOrganizer())));
+        calendar.put("attendees", buildUserObjects(request.getAttendees()));
         if (StringUtils.hasText(request.getRemarks())) calendar.put("remarks", request.getRemarks());
         return Map.of("schedule", calendar);
     }
@@ -191,9 +191,24 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
         return detail;
     }
 
+    private List<Map<String, String>> buildUserObjects(List<String> userIds) {
+        if (userIds == null || userIds.isEmpty()) {
+            return List.of();
+        }
+        return userIds.stream()
+                .filter(StringUtils::hasText)
+                .distinct()
+                .map(userId -> Map.of("userid", userId))
+                .toList();
+    }
+
     private String extractOrganizer(Object adminsObj) {
         if (adminsObj instanceof List<?> admins && !admins.isEmpty()) {
             Object first = admins.get(0);
+            if (first instanceof Map<?, ?> firstMap) {
+                Object userId = firstMap.get("userid");
+                return userId == null ? null : String.valueOf(userId);
+            }
             return first == null ? null : String.valueOf(first);
         }
         return null;
@@ -201,7 +216,13 @@ public class WeWorkScheduleHelperImpl implements WeWorkScheduleHelper {
 
     private List<String> extractAttendees(Object attendeesObj) {
         if (attendeesObj instanceof List<?> attendees) {
-            return attendees.stream().map(String::valueOf).toList();
+            return attendees.stream().map(item -> {
+                if (item instanceof Map<?, ?> itemMap) {
+                    Object userId = itemMap.get("userid");
+                    return userId == null ? null : String.valueOf(userId);
+                }
+                return item == null ? null : String.valueOf(item);
+            }).filter(StringUtils::hasText).toList();
         }
         return List.of();
     }
