@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 企业微信自动装配
@@ -57,6 +58,12 @@ public class WeWorkAutoConfiguration {
     @ConditionalOnMissingBean
     public WeWorkClient weWorkClient(WxCpService wxCpService, WeWorkProperties properties) {
         return new WeWorkClient(wxCpService, properties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     private WxCpDefaultConfigImpl buildConfigStorage(WeWorkProperties properties, RedissonClient redissonClient) {

@@ -276,6 +276,10 @@ junoyi:
     token-store-type: redis
     # Redis 中的 key 前缀
     redis-key-prefix: junoyi:wework:cp
+    # 企微群机器人webhook列表哦
+    group-bot:
+      webhooks:
+        - https://xxxx.com
 
   # ==================== 安全验证配置 ====================
   security:

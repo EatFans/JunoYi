@@ -3,6 +3,9 @@ package com.junoyi.framework.wework.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 企业微信配置属性
  *
@@ -53,6 +56,11 @@ public class WeWorkProperties {
     private String redisKeyPrefix = "junoyi:wework:cp";
 
     /**
+     * 群机器人配置
+     */
+    private GroupBotProperties groupBot = new GroupBotProperties();
+
+    /**
      * 是否使用 Redis 存储 accessToken/jsapiTicket
      */
     public boolean useRedisTokenStore() {
@@ -86,6 +94,18 @@ public class WeWorkProperties {
 
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
+    }
+
+    /**
+     * 企业微信群机器人配置
+     */
+    @Data
+    public static class GroupBotProperties {
+
+        /**
+         * 群机器人 webhook 列表
+         */
+        private List<String> webhooks = new ArrayList<>();
     }
 }
 
