@@ -63,7 +63,7 @@ idCard字段加入`user.data.idCard.write`（用户模块.数据.身份证.写�
 - 支付宝支付
 - 钉钉支持
 
-> 后续将不断拓展更新！具体详情请查看官方文档为准：https://doc.framework.junoyi.com
+> 后续将不断拓展更新！具体详情请查看官方文档为准：http://doc.framework.junoyi.com
 
 ---
 
@@ -281,7 +281,7 @@ JunoYi
 
 ## 📚 文档
 
-完整文档请访问：**https://doc.framework.junoyi.com**
+完整文档请访问：**http://doc.framework.junoyi.com**
 
 | 分类 | 内容 |
 |------|------|
