@@ -1,79 +1,99 @@
 <div align="center">
     <img width="160" height="160" alt="JunoYi Logo" src="docs/img/logo.png" />
+    <h1>JunoYi 钧逸</h1>
+    <p><strong>安全内建 · 开箱即用 · 企业级 Java 开发框架</strong></p>
+    <p>基于 Spring Boot 3.5 + Java 21 打造的现代化企业应用开发脚手架</p>
 </div>
 
 <div align="center">
 
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-3.5.9-blue.svg)](https://baomidou.com/)
+[![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-3.5.9-red)](https://baomidou.com/)
+[![Vue3](https://img.shields.io/badge/Vue-3.x-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Element Plus](https://img.shields.io/badge/Element%20Plus-latest-409EFF)](https://element-plus.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.6.0-green.svg)](https://github.com/Juno-Yi/JunoYi)
+[![Version](https://img.shields.io/badge/Version-0.6.1-success)](https://github.com/Juno-Yi/JunoYi)
 
-## JunoYi 后台管理系统脚手架框架
-**一个安全内建、简洁优雅的 Java 企业级开发框架**
+</div>
 
-[特性](#-核心特性) • [快速开始](#-快速开始) • [文档](#-文档) • [架构](#-项目架构) • [贡献](#-贡献指南) • [联系我们](#-联系我们)
+<div align="center">
 
- 📖 [文档站](https://doc.framework.junoyi.com) • 🎮 [演示站](https://demo.junoyi.com)
+📖 [在线文档](https://doc.framework.junoyi.com) • 🎮 [在线演示](https://demo.junoyi.com) • 📡 [API 文档](https://p94fvkojhd.apifox.cn/) • 💬 [加入社群](#-联系我们)
 
 </div>
 
 ---
 
-> **🎉 正式版本发布**
->
-> 当前版本为 **0.6.0**，已完成全面测试并正式发布，可用于生产环境。
->
-> ✅ **版本特性**
-> - 核心功能完整稳定
-> - 通过全面测试验证
-> - 适合企业级项目开发
-> - 可直接用于生产环境
->
-> 📌 **相关链接**
-> - 📖 文档站：https://doc.framework.junoyi.com
-> - 🎮 演示站： http://demo.junoyi.com
-> - API接口文档：https://p94fvkojhd.apifox.cn/
->
-> 演示站账号：
->
-> 超级管理员 - 账号：super_admin 密码：admin123
->
-> 用户管理员 - 账号：admin 密码：admin123
->
-> 用户1 - 账号：user1 密码：admin123
->
+## ✨ 为什么选择 JunoYi？
 
-> 小服务器请放过，不是靶场，请勿攻击，违者封IP
+### 🎯 **核心亮点**
+
+#### 1、混合动态权限模型体系：
+
+像传统RuoYi或相关类似框架还是采用 `RBAC` 权限模型，权限始终围绕 `角色`与`菜单` 走，JunoYi 支持更灵活的权限配置方式。权限不再完全依赖角色绑定，
+支持动态调整，配置实时生效。
+
+一个功能页面管理页面，如“用户管理”，该页面的权限就是为`user.ui.list.view`（用户模块.ui.列表页面.页面权限）,添加用户按钮权限为`user.ui.list.add.button`（用户.ui.列表页面.添加.按钮），
+添加用户API接口权限为`user.api.list.add`。这是基本的权限使用场景，可以通过这里权限体系，精细控制前端菜单页面权限、UI显示权限、API调用权限。
+
+除此之外，我们可以给数据加权限！例如获取用户列表接口，返回UserVO 响应数据列表，我们想要用户没有字段读取权限的，显示字段为空或者加密隐藏，就可以通过`注解方式`在`UserVO`类中给对应字段加入权限控制；
+或者要写入数据，给后端 DTO 数据对象某字段加上写入权限控制。
+
+例如：phonenumber字段权限为`user.data.phonenumber.read`（用户模块.数据.手机号.读取），我们给字段加入读取权限后，如果用户没有权限就无法正常获取该字段完整信息。
+
+idCard字段加入`user.data.idCard.write`（用户模块.数据.身份证.写入），加入写入权限后，如果用户没有权限就无法写入该数据，这条数据插入或者更新到数据表中该字段就会为`null`。
+
+##### 2、多平台原生支持
+
+在登录时候，框架提供多种策略，可以实现接口只允许在指定平台进行调用，并且框架默认提供平台类型 `后台管理WEB`、`前台WEB`、`小程序`、`H5`、`移动端APP`、`桌面端`等默认平台枚举，可以自行拓展平台类型。
+并且框架采用 `双Token机制`: `AccessToken` 与 `RefreshToken`，可以随平台定制不同平台的会话时长；支持无感刷新，实时会话监控，可以随时踢出用户登录会话。
+
+##### 3、企业级组件支持
+
+为了方便商业项目开发，框架将陆续提供多种常用部分基础设施支持，不需要重新造轮子，直接调用即可！
+
+基础设施：
+
+- 企业微信支持
+- 微信支持（微信小程序）
+- 微信支付支持
+- 飞书支持
+- 支付宝支持（支付宝小程序）
+- 支付宝支付
+- 钉钉支持
+
+> 后续将不断拓展更新！具体详情请查看官方文档为准：https://doc.framework.junoyi.com
 
 ---
 
-## 🗓️ 版本介绍规划
+## 🛠️ 技术栈
 
-项目持续更新中，后续版本规划：
+### 后端技术
 
-| 版本     | 说明 | 状态          |
-|--------|------|-------------|
-| 前后端分离版 | 当前版本，适合中小型项目 | 🚀 正式版      |
-| 多租户版   | 支持 SaaS 多租户架构 | 📋 待商业项目实践中 |
-| 微服务版   | 基于 Spring Cloud 的分布式架构 | 📋 规划中      |
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Spring Boot | 3.5.0 | 应用框架 |
+| Java | 21 | 开发语言 |
+| MyBatis-Plus | 3.5.9 | ORM 框架 |
+| MySQL | 8.0+ | 关系型数据库 |
+| Redis | 7.0+ | 缓存数据库 |
+| Redisson | 3.x | 分布式锁 |
+| JWT | - | 身份认证 |
+| Knife4j | 4.x | API 文档 |
+| Hutool | 5.x | 工具类库 |
+| MapStruct | 1.6.x | 对象转换 |
 
-📝 更新日志请查看文档站：https://doc.framework.junoyi.com/changelog/java/standalone.html
+### 前端技术
 
----
-
-## 📖 项目介绍
-
-JunoYi（钧逸）是一个基于 **Spring Boot 3.5.0** 和 **Java 21** 打造的现代化企业级应用开发框架。提供更全面、更成熟、更可扩展的基础设施能力，专为现代企业级业务研发而生。
-
-### ✨ 核心优势
-- **企业级基础设施完善 :** 内置统一规范的架构设计、模块划分与扩展机制，显著降低项目搭建与长期维护成本。
-- **专注业务，减少重复造轮子 :** 框架层承担通用能力建设，让开发者将精力集中在业务本身，而非基础防护与重复逻辑。
-- **多端原生支持，一套代码多端适配 :** 天然支持 Web前台 / Web后台 / 移动端 / 小程序 / 桌面端多端接入，统一接口规范，降低多端协作成本。
-- **混合权限模型，打破传统强耦合设计 :** 权限、角色、菜单完全解耦，不再被"菜单即权限"的旧范式限制，更符合真实企业业务场景。
-- **安全能力内置，端到端加密通信 :** 内置接口级安全防护机制，实现端到端数据加密，让系统从架构层面更安全、更可靠。
-- **面向长期演进的脚手架设计 :** 支持模块化扩展、插件化能力演进，适配中大型项目的持续迭代需求。
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Vue | 3.x | 前端框架 |
+| TypeScript | 5.x | 开发语言 |
+| Element Plus | latest | UI 组件库 |
+| Vite | 5.x | 构建工具 |
+| Pinia | 2.x | 状态管理 |
+| Vue Router | 4.x | 路由管理 |
 
 ---
 
@@ -81,257 +101,182 @@ JunoYi（钧逸）是一个基于 **Spring Boot 3.5.0** 和 **Java 21** 打造�
 
 ### 环境要求
 
-| 软件 | 版本要求 | 说明            |
-| --- | --- |---------------|
-| Java | 21 | 后端运行环境        |
-| Maven | 3.9+ | 后端打包构建环境      |
-| MySQL | 8.0+ | SQL 数据库       |
-| Redis | 7.0+ | 缓存数据库         |
-| IDEA | 2024.x | Java 开发工具（可选） |
-| Navicat | 任意 | 数据库可视化工具(可选）  |
-| DataGrip | 任意 | 数据库可视化工具（可选）|
-| Apifox | 任意 | 接口调试工具(可选) |
-| Postman | 任意 | 接口调试工具(可选) |
+- **Java**: 21+
+- **Maven**: 3.9+
+- **MySQL**: 8.0+
+- **Redis**: 7.0+
+- **Node.js**: 18+ (前端)
 
-### 使用 cli 创建项目工程
-JunoYi 提供了官方的脚手架工具 create-junoyi，支持通过 npm、pnpm、yarn 等包管理器快速创建项目。
+### 一键创建项目
 
-**使用 pnpm（推荐）**
+使用官方 CLI 工具快速创建项目：
+
 ```bash
+# 使用 pnpm (推荐)
 pnpm create junoyi
-```
 
-**使用 npm**
-```bash
+# 或使用 npm
 npm create junoyi
-```
 
-**使用 yarn**
-```bash
+# 或使用 yarn
 yarn create junoyi
 ```
 
-**1. 输入项目名称**
-当出现JunoYi大字后，就可以输入项目名称
+CLI 工具将引导你完成：
+- ✅ 选择代码托管平台（Gitee / GitHub）
+- ✅ 选择项目架构（单体 / 多租户 / 微服务）
+- ✅ 选择前端模板（Vue3 + Element Plus / Ant Design Vue / uni-app）
+- ✅ 检测开发环境
+- ✅ 自定义模块名和包名（可选）
+
+### 手动启动
+
+**1. 克隆项目**
+
+```bash
+# Gitee (国内推荐)
+git clone https://gitee.com/juno-yi/JunoYi.git
+
+# GitHub
+git clone https://github.com/Juno-Yi/JunoYi.git
 ```
 
-     ██╗██╗   ██╗███╗   ██╗ ██████╗ ██╗   ██╗██╗
-     ██║██║   ██║████╗  ██║██╔═══██╗╚██╗ ██╔╝██║
-     ██║██║   ██║██╔██╗ ██║██║   ██║ ╚████╔╝ ██║
-██   ██║██║   ██║██║╚██╗██║██║   ██║  ╚██╔╝  ██║
-╚█████╔╝╚██████╔╝██║ ╚████║╚██████╔╝   ██║   ██║
-╚════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝    ╚═╝   ╚═╝
+**2. 导入数据库**
 
+```bash
+# 创建数据库
+CREATE DATABASE junoyi DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-JunoYi 企业级后台管理开发框架初始化工具
-
-? 请输入项目名称: (junoyi-admin)
-```
-回车默认为junoyi-admin
-
-**2. 选择clone的仓库**
-```text
-? 请选择代码托管平台: (Use arrow keys)
-> 🚀 Gitee (国内推荐，速度快)
-  🌍 GitHub
+# 导入 SQL 文件
+mysql -u root -p junoyi < sql/MySQL/junoyi.sql
 ```
 
-**3. 选择架构模式**
-```text
-? 请选择项目架构: (Use arrow keys)
-> 🟢 单体架构 - 适合中小型项目，快速开发
-- 🟡 多租户架构 - SaaS 应用，支持多租户隔离 (开发中) 暂未完成
-- 🟡 微服务架构 - 大型分布式系统，服务解耦 (开发中) 暂未完成
-```
+**3. 修改配置**
 
-**4. 选择前端模板，并且创建**
-```text
-请选择前端模板 (空格选择，回车确认): (Press <space> to select, <a> to toggle all, <i> to invert selection, and <enter>
- to proceed)
->( )   Vue3 + TypeScript + Element Plus - 基于 Element-Plus 的管理后台UI
-- 🚧 Vue3 + TypeScript + Ant Design Vue - 基于 Ant Design Vue 的管理后台UI 开发中
-- 🚧 Vue3 + uni-app - 跨平台移动端应用 开发中
-- 🚧 Flutter - 原生跨平台移动应用 开发中
-```
-
-**5. 检测开发环境（可选）**
-```text
-? 是否检查开发环境? yes
-
-  🔍 检查开发环境:
-
-  ✓ Java         要求: 21               当前: 21             满足 - 后端运行环境
-  ✓ Maven        要求: 3.9+             当前: 3.9            满足 - 后端打包构建
-  ✗ MySQL        要求: 8.0+             未安装                未安装 - SQL 数据库
-  ✗ Redis        要求: 7.0+             未安装                未安装 - 缓存数据库
-  ✓ Node.js      要求: 18+              当前: 22.20.0        满足 - 前端运行环境
-  ✓ pnpm         要求: 8+               当前: 10.26.1        满足 - 前端包管理器
-
-  ⚠ 提示: 部分环境未满足要求，可能影响项目运行
-
-  建议安装或升级相应的软件到推荐版本
-```
-
-> 如果出现显示未安装，可能只是因为这些没有配置系统环境，如果在你的开发环境中，可能有些环境不是本地的，数据远程数据库，其实可以忽略这里提示
-
-
-**6. 重构初始化项目（二次开发）**
-```text
-? 是否需要重构初始化项目? (自定义模块名和包名) (y/N)
-```
-
-针对于二次开发，用于自己团队与公司的开发，如果需要指定模块前缀名、软件包名，这里支持使用 `cli` 工具，辅助帮你重构整个项目框架
-
-```text
-🔧 重构模块名...
-
-? 请输入新的模块前缀名: test
-```
-
-输入y后，可以重构模块名，默认为test
-
-```text
-🔧 重构包名...
-
-? 请输入新的包名 (如 com.example): (com.example)
-```
-
-重构新的包名,可以输入自定义包名称,默认为com.example
-
-**7. 项目工程创建成功**
-```text
-  ____                              _
- / ___| _   _  ___ ___ ___  ___ ___| |
- \___ \| | | |/ __/ __/ _ \/ __/ __| |
-  ___) | |_| | (_| (_|  __/\__ \__ \_|
- |____/ \__,_|\___\___\___||___/___(_)
-
-
-  接下来的步骤:
-
-    # 后端项目
-    cd junoyi-admin
-    使用 IDEA 打开项目根目录
-    配置数据库连接信息
-    运行 Spring Boot 主类启动后端
-
-    # 前端项目
-    cd junoyi-admin/junoyi-ui/vue3-element
-```
-
-### 启动步骤
-
-**1、打开项目**
-前端推荐使用 `vscode`、`webstorm`等打开项目，后端推荐使用 `IDEA` 等打开项目，看个人喜爱。
-
-**2、导入数据库**
-
-创建数据库，
-将目录 `sql` 中的对应版本的数据库SQL，在工具中导入到数据库中。
-
-确保启动了 Redis缓存数据库
-
-**3、修改 application YAML 配置文件**
+编辑 `junoyi-server/src/main/resources/application-local.yml`：
 
 ```yaml
-    # 文件输出配置
-    file:
-      # 是否启用文件日志输出
-      enabled: true
-      # 日志文件存储目录（只提供目录，不包含文件名）
-      path: ./temp/logs
-      # 单个日志文件的最大大小（支持KB、MB、GB单位）
-      max-size: 100MB
-      # 保留的历史日志文件数量（超过数量的旧文件会被删除）
-      max-history: 30
-      # 所有日志文件的总大小上限（超过后会删除最旧的文件）
-      total-size-cap: 1GB
-      # 是否压缩历史日志文件（true=压缩为.gz格式，false=不压缩）
-      compress: true
-      # 日志文件编码格式
-      encoding: UTF-8
-```
-
-将这里日志存储路径 `path` 改为自己的日志存储路径
-
-```yaml
-    api-encrypt:
-      enable: false
-      # 是否加密请求体
-      request: true
-      # 是否加密响应体
-      response: true
-      # 排除路径
-      exclude-urls:
-        - /swagger-ui/**
-        - /v3/api-docs/**
-        - /doc.html
-        - /webjars/**
-        - /your-custom-path/**
-        - /system/info/logo
-```
-
-确保 `application.yml` 中的接口加密功能保持关闭，开发环境中需要将其设置为关闭，方便调试，生产环境设置为开启
-
-
-```yaml
-          url: jdbc:mysql://localhost:3306/junoyi?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
-          username: root
-          password: 123456
-```
-
-将 `application-local.yml` 中的数据库url改为自己的数据库url，以及将 `username`、`password` 设置为自己的账号密码
-
-```yaml
-  # ==================== Redis 配置 ====================
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/junoyi?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: your_password
   data:
     redis:
       host: 127.0.0.1
       port: 6379
-      database: 1
-      timeout: 10s
-      # password: 123456
 ```
 
-Redis配置，默认redis是没有密码的，如果有需要自行设置
+**4. 启动后端**
 
-**4、启动项目**
-
-确保在自己的IDEA环境中，项目使用的 Java 为 Java 17，
-找到打开 `junoyi-server` 模块，该模块为项目主入口模块，启动运行打包都在该模块下，
-`com.junoyi.server` 软件包下 `JunoYiServerApplication` 主类。启动运行主类中的主函数。
-
-或 `maven` 启动 SpringBoot
 ```bash
+# 方式一：IDEA 运行
+# 打开 junoyi-server 模块，运行 JunoYiServerApplication 主类
+
+# 方式二：Maven 命令
 mvn spring-boot:run
+
+# 方式三：打包运行
+mvn clean package
+java -jar junoyi-server/target/junoyi-server-0.6.0.jar
 ```
 
-**5、成功启动项目**
-```text
-[2026-01-19 17:21:59.032] (main                          ) c.j.s.JunoYiServerApplica...   [INFO] 
-  - Started JunoYiServerApplication in 2.985 seconds (process running for 3.228)
-[2026-01-19 17:21:59.032] (main                          ) JUNOYI                         [INFO] 
-  - Local:      http://localhost:7588
-[2026-01-19 17:21:59.032] (main                          ) JUNOYI                         [INFO] 
-  - External:   http://10.18.40.110:7588
-[2026-01-19 17:21:59.033] (main                          ) JUNOYI                         [INFO] 
-  - Host Name:  fanzijiandeMacBook-Pro.local
-[2026-01-19 17:21:59.036] (main                          ) c.j.s.JunoYiServerApplica...   [INFO] 
-  - [JunoYi Server] Startup completed. System is now operational.
+**5. 启动前端**
 
-  _ _/|
- \'o.0'
- =(___)=
-    U
+```bash
+cd junoyi-ui/junoyi-vue-elementPlus
+pnpm install
+pnpm dev
 ```
 
-控制台日志输出结果为这样，表示启动成功！
+**6. 访问系统**
 
-可以通过访问 API 接口文档来测试是否成功运行！
+- 前端地址：http://localhost:5173
+- 后端地址：http://localhost:7588
+- API 文档：http://localhost:7588/doc.html
 
-```text
-http://localhost:7588/doc.html
+### 演示环境
+
+🎮 **在线演示**：http://demo.junoyi.com
+
+| 角色 | 账号 | 密码 | 说明 |
+|------|------|------|------|
+| 超级管理员 | super_admin | admin123 | 拥有所有权限 |
+| 用户管理员 | admin | admin123 | 部分管理权限 |
+| 普通用户 | user1 | admin123 | 基础权限 |
+
+> ⚠️ 演示环境仅供体验，请勿进行压力测试或攻击行为
+
+---
+
+## � 核心功能
+
+### 系统管理
+- **用户管理**：用户信息维护、角色分配、部门分配
+- **角色管理**：角色权限配置、数据权限设置
+- **菜单管理**：菜单树维护、权限标识配置
+- **部门管理**：组织架构树形管理
+- **字典管理**：系统字典数据维护
+- **参数管理**：系统参数配置
+- **通知公告**：系统通知发布管理
+- **操作日志**：用户操作日志记录与查询
+- **登录日志**：用户登录日志记录与查询
+
+### 开发工具
+- **代码生成**：基于数据库表结构自动生成 CRUD 代码
+- **API 文档**：基于 Knife4j 的在线 API 文档
+- **系统监控**：服务器性能监控、JVM 监控
+- **定时任务**：基于 Quartz 的定时任务管理
+
+### 安全防护
+- **端到端加密**：基于 RSA + AES 的接口加密
+- **XSS 防护**：自动过滤 XSS 攻击脚本
+- **SQL 注入防护**：参数化查询 + 关键字过滤
+- **图形验证码**：登录验证码
+- **Token 认证**：基于 JWT 的无状态认证
+- **密码加密**：BCrypt 密码加密存储
+
+### 权限控制
+- **接口权限**：基于注解的接口权限控制
+- **字段权限**：敏感字段脱敏与权限控制
+- **数据权限**：基于部门的数据范围控制
+- **菜单权限**：前端菜单动态加载
+
+---
+
+## 🏗️ 项目架构
+
+### 模块结构
+
 ```
+JunoYi
+├── junoyi-dependencies        # 依赖版本管理
+├── junoyi-framework           # 框架核心模块
+│   ├── junoyi-framework-core          # 核心工具类
+│   ├── junoyi-framework-web           # Web 基础设施
+│   ├── junoyi-framework-security      # 安全认证
+│   ├── junoyi-framework-permission    # 权限控制
+│   ├── junoyi-framework-datasource    # 数据源配置
+│   ├── junoyi-framework-redis         # Redis 缓存
+│   ├── junoyi-framework-captcha       # 验证码
+│   ├── junoyi-framework-api-doc       # API 文档
+│   ├── junoyi-framework-log           # 日志框架
+│   ├── junoyi-framework-excel         # Excel 处理
+│   ├── junoyi-framework-json          # JSON 处理
+│   ├── junoyi-framework-event         # 事件总线
+│   ├── junoyi-framework-quartz        # 定时任务
+│   ├── junoyi-framework-file          # 文件管理
+│   ├── junoyi-framework-wework        # 企业微信
+│   └── junoyi-framework-boot-starter  # 框架启动器
+├── junoyi-module              # 业务模块
+│   ├── junoyi-module-system           # 系统管理模块
+│   └── junoyi-module-demo             # 示例模块
+├── junoyi-server              # 启动入口
+└── junoyi-ui                  # 前端项目
+    ├── junoyi-vue-elementPlus         # Vue3 + Element Plus
+    └── junoyi-uniapp                  # uni-app 移动端
+```
+
 
 ---
 
@@ -350,334 +295,15 @@ http://localhost:7588/doc.html
 
 ---
 
-## 🏗️ 项目架构
+## 🗓️ 版本规划
 
-```
-JunoYi
-├── junoyi-dependencies        # 依赖版本管理
-├── junoyi-framework           # 框架核心模块
-│   ├── junoyi-framework-core          # 核心工具类
-│   ├── junoyi-framework-web           # Web 基础设施
-│   ├── junoyi-framework-security      # 安全认证
-│   ├── junoyi-framework-permission    # 权限控制
-│   ├── junoyi-framework-datasource    # 数据源配置
-│   ├── junoyi-framework-redis         # Redis 缓存
-│   ├── junoyi-framework-captcha       # 验证码
-│   ├── junoyi-framework-api-doc       # API 文档
-│   ├── junoyi-framework-log           # 日志框架
-│   └── ...
-├── junoyi-module              # 业务模块
-│   ├── junoyi-module-system           # 系统管理
-│   └── junoyi-module-demo             # 示例模块
-├── junoyi-module-api          # 模块 API 定义
-├── junoyi-server              # 启动入口
-└── junoyi-ui                  # 前端项目
-```
+| 版本 | 说明 | 状态            |
+|------|------|---------------|
+| 前后端分离版 | 当前版本，适合中小型项目 | ✅ 正式发布 v0.6.1 |
+| 多租户版 | 支持 SaaS 多租户架构 | 🚧 商业项目实践中    |
+| 微服务版 | 基于 Spring Cloud 的分布式架构 | 📋 规划中        |
 
-
----
-
-### 整体架构
-
-```mermaid
-graph TB
-    subgraph "客户端层 Client Layer"
-        A1[Web前台]
-        A2[Web后台]
-        A3[移动端APP]
-        A4[小程序]
-        A5[桌面端]
-    end
-    
-    subgraph "应用层 Application Layer - junoyi-server"
-        B1[Spring Boot 内嵌 Tomcat<br/>端口: 7588]
-    end
-    
-    subgraph "过滤器链 Filter Chain"
-        C1[CorsFilter<br/>跨域处理]
-        C2[ApiEncryptFilter<br/>API加密解密]
-        C3[XssFilter<br/>XSS防护]
-        C4[SqlInjectionFilter<br/>SQL注入防护]
-        C5[TokenAuthenticationFilter<br/>Token认证]
-    end
-    
-    subgraph "业务模块层 Business Module Layer"
-        D1[junoyi-module-system<br/>系统管理模块]
-        D2[junoyi-module-generation<br/>代码生成模块]
-        D3[junoyi-module-demo<br/>示例模块]
-        D4[junoyi-module-xxx<br/>扩展模块...]
-    end
-    
-    subgraph "API定义层 API Definition Layer"
-        E1[system-api<br/>接口/实体/Mapper]
-        E2[generation-api<br/>接口/实体/Mapper]
-        E3[demo-api<br/>接口/实体/Mapper]
-    end
-
-    subgraph "框架层 Framework Layer"
-        F1[framework-web<br/>Web基础设施]
-        F2[framework-security<br/>安全认证]
-        F3[framework-permission<br/>权限控制]
-        F4[framework-datasource<br/>数据源管理]
-        F5[framework-redis<br/>缓存管理]
-        F6[framework-captcha<br/>验证码]
-        F7[framework-log<br/>日志框架]
-        F8[framework-excel<br/>Excel处理]
-        F9[framework-api-doc<br/>API文档]
-        F10[framework-json<br/>JSON处理]
-        F11[framework-event<br/>事件总线]
-        F12[framework-quartz<br/>定时任务]
-        F13[framework-core<br/>核心工具]
-    end
-    
-    subgraph "依赖管理层 Dependency Layer"
-        G1[junoyi-dependencies<br/>统一版本管理]
-    end
-    
-    subgraph "基础设施层 Infrastructure Layer"
-        H1[(MySQL 8.0+<br/>主数据库)]
-        H2[(Redis 7.0+<br/>缓存数据库)]
-        H3[本地文件存储<br/>日志/上传文件]
-    end
-    
-    A1 & A2 & A3 & A4 & A5 --> B1
-    B1 --> C1 --> C2 --> C3 --> C4 --> C5
-    C5 --> D1 & D2 & D3 & D4
-    D1 --> E1
-    D2 --> E2
-    D3 --> E3
-    E1 & E2 & E3 --> F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10 & F11 & F12 & F13
-    F1 & F2 & F3 & F4 & F5 & F6 & F7 & F8 & F9 & F10 & F11 & F12 & F13 --> G1
-    F4 --> H1
-    F5 --> H2
-    B1 --> H3
-```
-
----
-
-### 请求处理流程
-
-```mermaid
-sequenceDiagram
-    participant Client as 客户端
-    participant Filter as 过滤器链
-    participant Interceptor as 拦截器
-    participant Controller as 控制器
-    participant Service as 服务层
-    participant Mapper as 数据访问层
-    participant DB as 数据库
-    participant Redis as 缓存
-    
-    Client->>Filter: 1. HTTP请求
-    Filter->>Filter: 2. CORS跨域处理
-    Filter->>Filter: 3. API加密解密
-    Filter->>Filter: 4. XSS防护
-    Filter->>Filter: 5. SQL注入防护
-    Filter->>Interceptor: 6. Token认证
-    Interceptor->>Interceptor: 7. 权限校验
-    Interceptor->>Interceptor: 8. 访问日志记录
-    Interceptor->>Controller: 9. 路由到控制器
-    Controller->>Controller: 10. 参数校验
-    Controller->>Service: 11. 调用业务逻辑
-    Service->>Redis: 12. 查询缓存
-    alt 缓存命中
-        Redis-->>Service: 返回缓存数据
-    else 缓存未命中
-        Service->>Mapper: 13. 查询数据库
-        Mapper->>DB: 14. 执行SQL
-        DB-->>Mapper: 15. 返回结果
-        Mapper-->>Service: 16. 返回数据
-        Service->>Redis: 17. 更新缓存
-    end
-    Service-->>Controller: 18. 返回业务结果
-    Controller-->>Client: 19. 统一响应格式
-```
-
----
-
-### 模块依赖关系
-
-```mermaid
-graph TB
-    subgraph "启动模块"
-        A[junoyi-server<br/>启动入口]
-    end
-    
-    subgraph "业务模块实现层"
-        B1[junoyi-module-system<br/>系统模块实现]
-        B2[junoyi-module-generation<br/>代码生成实现]
-        B3[junoyi-module-demo<br/>示例模块实现]
-    end
-    
-    subgraph "业务模块API层"
-        C1[junoyi-module-system-api<br/>系统模块API]
-        C2[junoyi-module-generation-api<br/>代码生成API]
-        C3[junoyi-module-demo-api<br/>示例模块API]
-    end
-    
-    subgraph "框架启动器"
-        D0[junoyi-framework-boot-starter<br/>框架启动核心<br/>聚合所有框架模块]
-    end
-    
-    subgraph "框架模块层"
-        D1[framework-web<br/>Web基础]
-        D2[framework-security<br/>安全认证]
-        D3[framework-permission<br/>权限控制]
-        D4[framework-datasource<br/>数据源]
-        D5[framework-redis<br/>缓存]
-        D6[framework-captcha<br/>验证码]
-        D7[framework-json<br/>JSON]
-        D8[framework-excel<br/>Excel]
-        D9[framework-event<br/>事件]
-        D10[framework-api-doc<br/>API文档]
-        D11[framework-core<br/>核心工具]
-    end
-    
-    subgraph "依赖管理"
-        E[junoyi-dependencies<br/>统一版本管理]
-    end
-    
-    A --> B1 & B2 & B3
-    B1 --> C1
-    B2 --> C2
-    B3 --> C3
-    C1 & C2 & C3 --> D0
-    D0 --> D1 & D2 & D3 & D4 & D5 & D6 & D7 & D8 & D9 & D10
-    D1 & D2 & D3 & D4 & D5 & D6 & D7 & D8 & D9 & D10 --> D11
-    D11 --> E
-    
-    style D0 fill:#f9f,stroke:#333,stroke-width:3px
-```
-
-**依赖说明**：
-1. **junoyi-server** 只依赖业务模块实现（system、demo 等）
-2. **业务模块实现** 依赖对应的 **API 模块**
-3. **API 模块** 统一依赖 **framework-boot-starter**
-4. **boot-starter** 聚合了所有框架模块，简化依赖管理
-5. 所有框架模块最终依赖 **framework-core** 核心模块
-6. **dependencies** 统一管理所有模块的版本号
-
----
-
-### 框架层详细架构
-```mermaid
-graph TB
-    subgraph "junoyi-framework-web Web基础设施"
-        W1[统一异常处理<br/>GlobalExceptionHandler]
-        W2[跨域配置<br/>CorsConfiguration]
-        W3[XSS防护<br/>XssFilter]
-        W4[SQL注入防护<br/>SqlInjectionFilter]
-        W5[访问日志<br/>AccessLogInterceptor]
-        W6[统一响应封装<br/>Result]
-    end
-    
-    subgraph "junoyi-framework-security 安全认证"
-        S1[JWT Token生成<br/>JwtTokenHelper]
-        S2[Token认证过滤器<br/>TokenAuthenticationFilter]
-        S3[RSA加密解密<br/>RsaCryptoHelper]
-        S4[API加密过滤器<br/>ApiEncryptFilter]
-        S5[密码工具<br/>PasswordUtils]
-        S6[会话管理<br/>SessionHelper]
-    end
-
-    subgraph "junoyi-framework-permission 权限控制"
-        P1[权限注解<br/>Permission]
-        P2[权限切面<br/>PermissionAspect]
-        P3[权限匹配器<br/>PermissionMatcher]
-        P4[字段权限<br/>FieldPermission]
-        P5[字段脱敏<br/>MaskUtils]
-        P6[权限助手<br/>PermissionHelper]
-    end
-    
-    subgraph "junoyi-framework-datasource 数据源管理"
-        DS1[MyBatis-Plus配置<br/>MyBatisPlusConfig]
-        DS2[分页插件<br/>PaginationInterceptor]
-        DS3[数据权限<br/>DataScopeHandler]
-        DS4[慢SQL监控<br/>SlowSqlInterceptor]
-        DS5[SQL美化<br/>SqlBeautifyInterceptor]
-        DS6[动态数据源<br/>DynamicDataSource]
-    end
-    
-    subgraph "junoyi-framework-redis 缓存管理"
-        R1[Redis工具类<br/>RedisUtils]
-        R2[Redisson配置<br/>RedissonConfig]
-        R3[分布式锁<br/>Lock4j]
-        R4[缓存注解<br/>Cacheable]
-    end
-    
-    subgraph "junoyi-framework-captcha 验证码"
-        CA1[图形验证码<br/>ImageCaptcha]
-        CA2[滑块验证码<br/>SlideCaptcha]
-        CA3[验证码存储<br/>CaptchaStore]
-        CA4[验证码助手<br/>CaptchaHelper]
-    end
-    
-    subgraph "junoyi-framework-log 日志框架"
-        L1[日志配置<br/>JunoYiLoggingConfig]
-        L2[日志工具<br/>JunoYiLog]
-        L3[操作日志<br/>OperationLog注解]
-        L4[日志切面<br/>LogAspect]
-    end
-    
-    subgraph "junoyi-framework-core 核心工具"
-        C1[统一返回<br/>Result]
-        C2[分页对象<br/>PageQuery/PageResult]
-        C3[基础异常<br/>BaseException]
-        C4[工具类<br/>Utils]
-        C5[常量定义<br/>Constants]
-        C6[对象转换<br/>MapStruct]
-    end
-```
-
----
-
-### 权限系统架构
-
-```mermaid
-graph TB
-    subgraph "权限模型 Permission Model"
-        PM1[用户 User]
-        PM2[角色 Role]
-        PM3[权限 Permission]
-        PM4[菜单 Menu]
-        PM5[部门 Dept]
-        PM6[用户组 UserGroup]
-        PM7[角色组 RoleGroup]
-        PM8[权限组 PermGroup]
-        PM9[部门组 DeptGroup]
-    end
-    
-    subgraph "权限关系 Relations"
-        R1[用户-角色<br/>N:N]
-        R2[角色-权限<br/>N:N]
-        R3[用户-权限<br/>N:N 直接授权]
-        R4[用户-部门<br/>N:N]
-        R5[用户-用户组<br/>N:N]
-        R6[角色-角色组<br/>N:N]
-        R7[权限-权限组<br/>N:N]
-        R8[部门-部门组<br/>N:N]
-    end
-    
-    subgraph "权限控制 Access Control"
-        AC1[接口权限<br/>Permission注解]
-        AC2[字段权限<br/>FieldPermission注解]
-        AC3[数据权限<br/>DataScope注解]
-        AC4[菜单权限<br/>Menu Control]
-    end
-    
-    PM1 --> R1 --> PM2
-    PM2 --> R2 --> PM3
-    PM1 --> R3 --> PM3
-    PM1 --> R4 --> PM5
-    PM1 --> R5 --> PM6
-    PM2 --> R6 --> PM7
-    PM3 --> R7 --> PM8
-    PM5 --> R8 --> PM9
-    
-    PM3 --> AC1 & AC2 & AC3
-    PM4 --> AC4
-```
-
+📝 **更新日志**：https://doc.framework.junoyi.com/changelog/java/standalone.html
 
 ---
 
@@ -693,14 +319,12 @@ graph TB
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 提交 Pull Request
 
-### 代码审查
+### 代码规范
 
-所有 PR 都需要经过代码审查才能合并。请确保：
-
-- 代码符合项目规范
-- 添加了必要的测试
-- 更新了相关文档
-- 通过了所有 CI 检查
+- 遵循阿里巴巴 Java 开发手册
+- 保持代码风格一致
+- 添加必要的注释和文档
+- 编写单元测试
 
 ---
 
@@ -710,6 +334,8 @@ graph TB
 
 - **QQ 群**：1074033133
 - **邮箱**：eatfan0921@163.com
+- **GitHub**：https://github.com/Juno-Yi/JunoYi
+- **Gitee**：https://gitee.com/juno-yi/JunoYi
 
 <div align="center">
     <img width="200" src="docs/img/QQ群.jpg" alt="QQ群二维码" />
@@ -718,7 +344,7 @@ graph TB
 
 ---
 
-## ☕ 捐赠赞助
+## ☕ 支持项目
 
 如果这个项目对你有帮助，欢迎请作者喝杯咖啡 ☕
 
@@ -745,21 +371,23 @@ graph TB
 
 ---
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Juno-Yi/JunoYi&type=date&legend=top-left)](https://www.star-history.com/#Juno-Yi/JunoYi&type=date&legend=top-left)
+## 🔗 相关项目
+
+- [JunoYi Vue3 前端 (GitHub)](https://github.com/Juno-Yi/JunoYi-Vue-ElementPlus) - 基于 Vue3 + Element Plus 的管理后台
+- [JunoYi Vue3 前端 (Gitee)](https://gitee.com/juno-yi/juno-yi-vue-element-plus) - 基于 Vue3 + Element Plus 的管理后台
 
 ---
 
-## 🔗 相关项目
+## ⭐ Star History
 
-- [JunoYi 框架配套前端 Github](https://github.com/Juno-Yi/JunoYi-Vue-ElementPlus) - JunoYi 企业级后端开发框架配套前端
-- [JunoYi 框架配套前端 Gitee](https://gitee.com/juno-yi/juno-yi-vue-element-plus) - JunoYi 企业级后端开发框架配套前端
+[![Star History Chart](https://api.star-history.com/svg?repos=Juno-Yi/JunoYi&type=Date)](https://star-history.com/#Juno-Yi/JunoYi&Date)
 
---- 
+---
 
 <div align="center">
 
 **⭐ 如果这个项目对你有帮助，请给个 Star 支持一下！**
 
-Made with ❤️ by JunoYi Team
+Made with ❤️ by [JunoYi Team](https://junoyi.com)
 
 </div>
