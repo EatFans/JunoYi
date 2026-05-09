@@ -75,7 +75,6 @@ public class SysUserServiceImpl implements ISysUserService {
     private final SysPermGroupMapper sysPermGroupMapper;
     private final SysUserConverter sysUserConverter;
     private final SysRoleConverter sysRoleConverter;
-    private final SysPermGroupConverter sysPermGroupConverter;
     private final SysDictApi sysDictApi;
 
     /**
@@ -543,7 +542,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 new LambdaQueryWrapper<SysPermGroup>()
                         .in(SysPermGroup::getId, groupIds));
 
-        return sysPermGroupConverter.toVoList(groups);
+        return SysPermGroupConverter.toVoList(groups);
     }
 
     /**

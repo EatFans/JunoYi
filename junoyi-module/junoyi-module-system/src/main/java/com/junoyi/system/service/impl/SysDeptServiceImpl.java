@@ -50,7 +50,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
     private final SysDeptMapper sysDeptMapper;
     private final SysDeptGroupMapper sysDeptGroupMapper;
     private final SysPermGroupMapper sysPermGroupMapper;
-    private final SysPermGroupConverter sysPermGroupConverter;
     private final SysDictApi sysDictApi;
 
     /**
@@ -267,7 +266,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
                 new LambdaQueryWrapper<SysPermGroup>()
                         .in(SysPermGroup::getId, groupIds));
 
-        return sysPermGroupConverter.toVoList(groups);
+        return SysPermGroupConverter.toVoList(groups);
     }
 
     /**

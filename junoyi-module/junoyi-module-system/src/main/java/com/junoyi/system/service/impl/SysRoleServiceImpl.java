@@ -52,7 +52,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private final SysRoleGroupMapper sysRoleGroupMapper;
     private final SysPermGroupMapper sysPermGroupMapper;
     private final SysRoleConverter sysRoleConverter;
-    private final SysPermGroupConverter sysPermGroupConverter;
     private final SysDictApi sysDictApi;
 
     /**
@@ -298,7 +297,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
                 new LambdaQueryWrapper<SysPermGroup>()
                         .in(SysPermGroup::getId, groupIds));
 
-        return sysPermGroupConverter.toVoList(groups);
+        return SysPermGroupConverter.toVoList(groups);
     }
 
     /**
