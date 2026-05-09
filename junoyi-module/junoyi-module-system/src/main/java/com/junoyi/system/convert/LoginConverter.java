@@ -1,23 +1,27 @@
 package com.junoyi.system.convert;
 
-import com.junoyi.framework.core.convert.MapStructConfig;
-import com.junoyi.system.domain.dto.LoginDTO;
 import com.junoyi.system.domain.bo.LoginBO;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import com.junoyi.system.domain.dto.LoginDTO;
 
 /**
- * 登录对象转换器
+ * 登录对象转换器静态类
  *
  * @author Fan
  */
-@Mapper(componentModel = "spring", config = MapStructConfig.class)
-public interface LoginConverter {
-
-    LoginConverter INSTANCE = Mappers.getMapper(LoginConverter.class);
+public class LoginConverter {
 
     /**
-     * LoginDTO 转 LoginBO
+     * LoginDTO 转换 LoginBO
+     * @param loginDTO LoginDTO
+     * @return LoginBO
      */
-    LoginBO toLoginBO(LoginDTO dto);
+    public static LoginBO toLoginBo(LoginDTO loginDTO){
+        LoginBO loginBO = new LoginBO();
+        loginBO.setEmail(loginDTO.getEmail());
+        loginBO.setPhonenumber(loginBO.getPhonenumber());
+        loginBO.setUsername(loginDTO.getUsername());
+        loginBO.setPlatformType(loginDTO.getPlatformType());
+        loginBO.setPassword(loginDTO.getPassword());
+        return loginBO;
+    }
 }
