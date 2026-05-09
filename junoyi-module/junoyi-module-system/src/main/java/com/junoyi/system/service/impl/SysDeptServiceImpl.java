@@ -14,7 +14,6 @@ import com.junoyi.system.convert.SysPermGroupConverter;
 import com.junoyi.system.domain.bo.SysDeptSortItem;
 import com.junoyi.system.domain.dto.SysDeptDTO;
 import com.junoyi.system.domain.dto.SysDeptQueryDTO;
-import com.junoyi.system.domain.dto.SysDeptSortDTO;
 import com.junoyi.system.domain.po.SysDept;
 import com.junoyi.system.domain.po.SysDeptGroup;
 import com.junoyi.system.domain.po.SysPermGroup;
