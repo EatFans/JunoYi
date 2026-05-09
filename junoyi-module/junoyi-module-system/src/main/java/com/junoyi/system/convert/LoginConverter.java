@@ -11,6 +11,13 @@ import com.junoyi.system.domain.dto.LoginDTO;
 public class LoginConverter {
 
     /**
+     * 私有构造函数，防止实例化
+     */
+    private LoginConverter() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+    /**
      * LoginDTO 转换 LoginBO
      * @param loginDTO LoginDTO
      * @return LoginBO
