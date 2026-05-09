@@ -73,10 +73,6 @@ public class SysUserServiceImpl implements ISysUserService {
     private final SysRoleMapper sysRoleMapper;
     private final SysDeptMapper sysDeptMapper;
     private final SysPermGroupMapper sysPermGroupMapper;
-    private final SysUserConverter sysUserConverter;
-    private final SysRoleConverter sysRoleConverter;
-    private final SysDeptConverter sysDeptConverter;
-    private final SysPermGroupConverter sysPermGroupConverter;
     private final SysDictApi sysDictApi;
 
     /**
@@ -114,8 +110,8 @@ public class SysUserServiceImpl implements ISysUserService {
                 .eq(SysUser::isDelFlag, false);
 
         Page<SysUser> resultPage = sysUserMapper.selectPage(page, wrapper);
-        List<SysUserVO> userVOList = sysUserConverter.toVoList(resultPage.getRecords());
-        
+        List<SysUserVO> userVOList = SysUserConverter.toVoList(resultPage.getRecords());
+
         // 使用字典API翻译性别和状态标签，并获取标签类型（颜色）
         for (SysUserVO userVO : userVOList) {
             if (userVO.getSex() != null) {
@@ -153,7 +149,7 @@ public class SysUserServiceImpl implements ISysUserService {
         checkUserUniqueness(null, userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhonenumber());
 
         // 创建用户实体
-        SysUser sysUser = sysUserConverter.toEntity(userDTO);
+        SysUser sysUser = SysUserConverter.toEntity(userDTO);
 
         // 密码加密
         PasswordUtils.EncryptResult encryptResult = PasswordUtils.encrypt(userDTO.getPassword());
@@ -190,7 +186,7 @@ public class SysUserServiceImpl implements ISysUserService {
         checkUserUniqueness(userDTO.getId(), userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhonenumber());
 
         // 更新用户基本信息（不更新密码）
-        SysUser sysUser = sysUserConverter.toEntity(userDTO);
+        SysUser sysUser = SysUserConverter.toEntity(userDTO);
         sysUser.setUserId(userDTO.getId());
         sysUser.setPassword(null);  // 不更新密码
         sysUser.setSalt(null);      // 不更新盐值
@@ -357,7 +353,7 @@ public class SysUserServiceImpl implements ISysUserService {
                         .in(SysRole::getId, roleIds)
                         .eq(SysRole::isDelFlag, false));
 
-        return sysRoleConverter.toVoList(roles);
+        return SysRoleConverter.toVoList(roles);
     }
 
     /**
@@ -443,7 +439,7 @@ public class SysUserServiceImpl implements ISysUserService {
                         .in(SysDept::getId, deptIds)
                         .eq(SysDept::isDelFlag, false));
 
-        return sysDeptConverter.toVoList(depts);
+        return SysDeptConverter.toVoList(depts);
     }
 
     /**
@@ -544,7 +540,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 new LambdaQueryWrapper<SysPermGroup>()
                         .in(SysPermGroup::getId, groupIds));
 
-        return sysPermGroupConverter.toVoList(groups);
+        return SysPermGroupConverter.toVoList(groups);
     }
 
     /**

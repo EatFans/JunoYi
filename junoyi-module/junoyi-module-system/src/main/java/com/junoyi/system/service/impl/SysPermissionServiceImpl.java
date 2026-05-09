@@ -29,7 +29,6 @@ import java.util.List;
 public class SysPermissionServiceImpl implements ISysPermissionService {
 
     private final SysPermissionMapper sysPermissionMapper;
-    private final SysPermissionConverter sysPermissionConverter;
 
     /**
      * 获取权限列表（分页）
@@ -50,7 +49,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
         wrapper.orderByDesc(SysPermission::getCreateTime);
 
         Page<SysPermission> resultPage = sysPermissionMapper.selectPage(page, wrapper);
-        List<SysPermissionVO> voList = sysPermissionConverter.toVoList(resultPage.getRecords());
+        List<SysPermissionVO> voList = SysPermissionConverter.toVoList(resultPage.getRecords());
 
         return PageResult.of(voList,
                 resultPage.getTotal(),
@@ -69,7 +68,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
         wrapper.eq(SysPermission::getStatus, 1)
                 .orderByAsc(SysPermission::getPermission);
         List<SysPermission> permissions = sysPermissionMapper.selectList(wrapper);
-        return sysPermissionConverter.toVoList(permissions);
+        return SysPermissionConverter.toVoList(permissions);
     }
 
     /**
@@ -78,7 +77,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
      */
     @Override
     public void addPermission(SysPermissionDTO dto) {
-        SysPermission permission = sysPermissionConverter.toEntity(dto);
+        SysPermission permission = SysPermissionConverter.toEntity(dto);
         // 设置创建人和创建时间
         permission.setCreateBy(SecurityUtils.getUserName());
         permission.setCreateTime(DateUtils.getNowDate());
