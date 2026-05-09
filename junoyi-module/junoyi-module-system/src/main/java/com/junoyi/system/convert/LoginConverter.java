@@ -8,7 +8,7 @@ import com.junoyi.system.domain.dto.LoginDTO;
  *
  * @author Fan
  */
-public class LoginConverter {
+public final class LoginConverter {
 
     /**
      * 私有构造函数，防止实例化

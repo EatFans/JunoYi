@@ -51,7 +51,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
     private final SysDeptMapper sysDeptMapper;
     private final SysDeptGroupMapper sysDeptGroupMapper;
     private final SysPermGroupMapper sysPermGroupMapper;
-    private final SysDeptConverter sysDeptConverter;
     private final SysPermGroupConverter sysPermGroupConverter;
     private final SysDictApi sysDictApi;
 
@@ -76,8 +75,8 @@ public class SysDeptServiceImpl implements ISysDeptService {
         // 查询符合条件的部门列表
         List<SysDept> deptList = sysDeptMapper.selectList(wrapper);
         // 将实体对象转换为VO对象
-        List<SysDeptVO> voList = sysDeptConverter.toVoList(deptList);
-        
+        List<SysDeptVO> voList = SysDeptConverter.toVoList(deptList);
+
         // 使用字典API翻译状态标签，并获取标签类型（颜色）
         for (SysDeptVO deptVO : voList) {
             if (deptVO.getStatus() != null) {
@@ -109,7 +108,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         if (sysDept == null || sysDept.isDelFlag()) {
             return null;
         }
-        return sysDeptConverter.toVo(sysDept);
+        return SysDeptConverter.toVo(sysDept);
     }
 
     /**
@@ -119,7 +118,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public void addDept(SysDeptDTO deptDTO) {
-        SysDept sysDept = sysDeptConverter.toPo(deptDTO);
+        SysDept sysDept = SysDeptConverter.toPo(deptDTO);
         sysDept.setDelFlag(false);
         sysDept.setStatus(SysDeptStatus.ENABLE.getCode());
         sysDept.setCreateTime(DateUtils.getNowDate());
@@ -139,7 +138,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public void updateDept(SysDeptDTO deptDTO) {
-        SysDept sysDept = sysDeptConverter.toPo(deptDTO);
+        SysDept sysDept = SysDeptConverter.toPo(deptDTO);
         sysDept.setUpdateTime(DateUtils.getNowDate());
         sysDept.setUpdateBy(SecurityUtils.getUserName());
         sysDeptMapper.updateById(sysDept);

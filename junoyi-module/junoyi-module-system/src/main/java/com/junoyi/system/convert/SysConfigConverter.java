@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @author Fan
  */
-public class SysConfigConverter {
+public final class SysConfigConverter {
 
     private SysConfigConverter() {
     }
