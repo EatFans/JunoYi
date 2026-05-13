@@ -32,4 +32,19 @@ public class WeChatMpAuthController extends BaseController {
 
         return R.ok();
     }
+
+    /**
+     * 微信小程序刷新AccessToken接口
+     */
+    public R<?> freshToken(){
+        return R.ok();
+    }
+
+    /**
+     * 微信小程序退出登录
+     * @return
+     */
+    public R<Void> wechatLogout(){
+        return R.ok();
+    }
 }
