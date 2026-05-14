@@ -30,6 +30,8 @@
         <module>junoyi-framework-quartz</module>
         <module>junoyi-framework-api-doc</module>
         <module>junoyi-framework-wework</module>
+        <module>junoyi-framework-wechat</module>
+        <module>junoyi-framework-platform</module>
     </modules>
 
 </project>

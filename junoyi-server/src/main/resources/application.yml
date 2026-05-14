@@ -10,7 +10,7 @@
 # ==================== JunoYi 框架配置 ====================
 junoyi:
   # 框架版本号
-  version: 0.6.2
+  version: 0.6.3
 
   # ==================== 日志配置 ====================
   log:
@@ -280,6 +280,40 @@ junoyi:
     group-bot:
       webhooks:
         - https://xxxx.com
+
+  # ==================== 微信相关配置 ====================
+  # 如果要使用微信支持请先讲junoyi-framework-boot-starter模块中的junoyi-framework-wechat注释去掉
+  # 刷新maven，修改好配置文件，业务模块要统一类似system模块引用junoyi-framework-boot-starter模块即可使用。
+  wechat:
+    # 微信小程序配置
+    mp:
+      # 是否启用微信小程序功能（默认：false）
+      enabled: true
+      # 小程序 AppID（必填，启用时）
+      app-id: your-mini-app-id
+      # 小程序 AppSecret（必填，启用时）
+      secret: your-mini-app-secret
+    # 微信支付配置
+    pay:
+      # 是否启用微信支付功能（默认：false）
+      enabled: false
+      # 微信支付分配的公众账号ID（必填，启用时）
+      app-id: your-app-id
+      # 微信支付分配的商户号（必填，启用时）
+      merchant-id: your-merchant-id
+      # APIv3密钥（必填，启用时）
+      api-v3-key: your-api-v3-key
+      # 商户私钥文件路径（必填，启用时）
+      private-key-path: /path/to/apiclient_key.pem
+      # 商户证书文件路径（必填，启用时）
+      private-cert-path: /path/to/apiclient_cert.pem
+      # 商户证书序列号（必填，启用时）
+      cert-serial-no: your-cert-serial-no
+      # 支付成功回调通知地址（必填，启用时）
+      pay-notify-url: https://your-domain.com/api/pay/notify
+      # 退款成功回调通知地址（可选）
+      refund-notify-url: https://your-domain.com/api/refund/notify
+
 
   # ==================== 安全验证配置 ====================
   security:

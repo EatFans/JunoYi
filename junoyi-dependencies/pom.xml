@@ -7,7 +7,7 @@
 
     <groupId>com.junoyi</groupId>
     <artifactId>junoyi-dependencies</artifactId>
-    <version>0.6.2</version>
+    <version>0.6.3</version>
     <packaging>pom</packaging>
     <name>junoyi-dependencies</name>
     <description>
@@ -16,7 +16,7 @@
 
     <properties>
         <!-- 项目版本 -->
-        <revision>0.6.2</revision>
+        <revision>0.6.3</revision>
         <!-- 统一依赖版本号 -->
         <spring.boot.version>3.5.0</spring.boot.version>
 
@@ -41,6 +41,7 @@
         <aliyun.oss.version>3.17.1</aliyun.oss.version>
         <minio.version>8.5.7</minio.version>
         <qiniu.version>7.13.1</qiniu.version>
+        <weixin.version>4.8.0</weixin.version>
     </properties>
 
     <dependencyManagement>
@@ -145,6 +146,16 @@
                 <artifactId>junoyi-framework-wework</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.junoyi</groupId>
+                <artifactId>junoyi-framework-wechat</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.junoyi</groupId>
+                <artifactId>junoyi-framework-platform</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- Module 功能模块 -->
             <dependency>
@@ -152,8 +163,24 @@
                 <artifactId>junoyi-module-system</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.junoyi</groupId>
+                <artifactId>junoyi-module-oauth</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- ========== 第三方依赖版本管理 ========== -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-pay</artifactId>
+                <version>${weixin.version}</version>
+            </dependency>
+
             <!-- 七牛云 (可选) -->
             <dependency>
                 <groupId>com.qiniu</groupId>
