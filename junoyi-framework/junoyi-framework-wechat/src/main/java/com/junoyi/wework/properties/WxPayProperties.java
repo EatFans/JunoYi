@@ -1,8 +1,6 @@
 package com.junoyi.wework.properties;
 
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Component;
  *
  * @author Fan
  */
-@Slf4j
 @Data
 @Component
 @ConfigurationProperties(prefix = "junoyi.wechat.pay")
@@ -79,23 +76,4 @@ public class WxPayProperties {
      * 退款成功回调通知地址
      */
     private String refundNotifyUrl;
-
-    @PostConstruct
-    public void init() {
-        if (Boolean.TRUE.equals(enabled)) {
-            log.info("WeChat payment function is enabled [商户号: {}]", maskMerchantId(merchantId));
-        } else {
-            log.info("WeChat payment function is not enabled");
-        }
-    }
-
-    /**
-     * 脱敏商户号，只显示前4位和后4位
-     */
-    private String maskMerchantId(String merchantId) {
-        if (merchantId == null || merchantId.length() <= 8) {
-            return "****";
-        }
-        return merchantId.substring(0, 4) + "****" + merchantId.substring(merchantId.length() - 4);
-    }
 }

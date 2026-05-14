@@ -1,8 +1,6 @@
 package com.junoyi.framework.wework.properties;
 
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.List;
  *
  * @author Fan
  */
-@Slf4j
 @Data
 @ConfigurationProperties(prefix = "junoyi.wework")
 public class WeWorkProperties {
@@ -63,18 +60,6 @@ public class WeWorkProperties {
      */
     private GroupBotProperties groupBot = new GroupBotProperties();
 
-    @PostConstruct
-    public void init() {
-        if (enable) {
-            log.info("企业微信功能已启用 [企业ID: {}, AgentId: {}, Token存储: {}]",
-                    maskCorpId(corpId),
-                    agentId,
-                    tokenStoreType);
-        } else {
-            log.info("企业微信功能未启用");
-        }
-    }
-
     /**
      * 是否使用 Redis 存储 accessToken/jsapiTicket
      */
@@ -109,16 +94,6 @@ public class WeWorkProperties {
 
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
-    }
-
-    /**
-     * 脱敏企业ID，只显示前4位和后4位
-     */
-    private String maskCorpId(String corpId) {
-        if (corpId == null || corpId.length() <= 8) {
-            return "****";
-        }
-        return corpId.substring(0, 4) + "****" + corpId.substring(corpId.length() - 4);
     }
 
     /**

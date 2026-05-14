@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import com.junoyi.wework.properties.WxPayProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Fan
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(WxPayProperties.class)
@@ -33,6 +35,8 @@ public class WxPayConfiguration {
      */
     @Bean
     public WxPayService wxPayService() {
+        log.info("微信支付功能已启用 [商户号: {}]", maskMerchantId(wxPayProperties.getMerchantId()));
+
         WxPayConfig payConfig = new WxPayConfig();
         payConfig.setAppId(wxPayProperties.getAppId());
         payConfig.setMchId(wxPayProperties.getMerchantId());
@@ -45,6 +49,16 @@ public class WxPayConfiguration {
         wxPayService.setConfig(payConfig);
 
         return wxPayService;
+    }
+
+    /**
+     * 脱敏商户号，只显示前4位和后4位
+     */
+    private String maskMerchantId(String merchantId) {
+        if (merchantId == null || merchantId.length() <= 8) {
+            return "****";
+        }
+        return merchantId.substring(0, 4) + "****" + merchantId.substring(merchantId.length() - 4);
     }
 }
 
