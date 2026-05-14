@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.junoyi.system.mapper.SysUserThirdAuthMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="ThirdAuthUserResultMap" type="com.junoyi.system.domain.dto.SysThirdAuthUserDTO">
+        <result column="authId" property="authId" jdbcType="BIGINT"/>
+        <result column="bindUserId" property="bindUserId" jdbcType="BIGINT"/>
+        <result column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="nickName" property="nickName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="delFlag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+
+    <!-- 通过第三方认证信息联表查询绑定关系与系统用户 -->
+    <select id="selectUserSnapshotByAuth" resultMap="ThirdAuthUserResultMap">
+        SELECT
+            ta.id AS authId,
+            ta.user_id AS bindUserId,
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.nick_name AS nickName,
+            u.status AS status,
+            u.del_flag AS delFlag
+        FROM sys_user_third_auth ta
+        LEFT JOIN sys_user u ON ta.user_id = u.user_id
+        WHERE ta.auth_type = #{authType}
+          AND ta.auth_key = #{authKey}
+        LIMIT 1
+    </select>
+
+</mapper>
+
