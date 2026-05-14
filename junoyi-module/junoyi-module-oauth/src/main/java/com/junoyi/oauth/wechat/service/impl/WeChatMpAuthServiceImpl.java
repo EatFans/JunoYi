@@ -3,6 +3,7 @@ package com.junoyi.oauth.wechat.service.impl;
 import com.junoyi.framework.security.helper.AuthHelper;
 import com.junoyi.oauth.wechat.service.IWeChatMpAuthService;
 import com.junoyi.system.domain.vo.AuthVO;
+import com.junoyi.system.mapper.SysUserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
 
+    private final SysUserMapper sysUserMapper;
+    private final SysUserThirdAuthMapper sysUserThirdAuthMapper;
     private final AuthHelper authHelper;
 
     /**
