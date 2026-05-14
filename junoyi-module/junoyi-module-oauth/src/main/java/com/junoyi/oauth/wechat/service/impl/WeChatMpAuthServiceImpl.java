@@ -1,5 +1,6 @@
 package com.junoyi.oauth.wechat.service.impl;
 
+import com.junoyi.framework.security.helper.AuthHelper;
 import com.junoyi.oauth.wechat.service.IWeChatMpAuthService;
 import com.junoyi.system.domain.vo.AuthVO;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
+
+    private final AuthHelper authHelper;
 
     /**
      * 微信小程序登录

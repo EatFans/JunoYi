@@ -281,6 +281,15 @@ junoyi:
       webhooks:
         - https://xxxx.com
 
+  # ==================== 微信相关配置 ====================
+  # 如果要使用微信支持请先讲junoyi-framework-boot-starter模块中的junoyi-framework-wechat注释去掉
+  # 刷新maven，修改好配置文件，业务模块要统一类似system模块引用junoyi-framework-boot-starter模块即可使用。
+  wechat:
+    # 微信小程序配置，默认不开启，需要修改硬编码开启
+    mp:
+      appid: wxxxxxxxxxxxxxxxxxx
+      secret: xxxxxxxxxxxxxxxxxx
+
   # ==================== 安全验证配置 ====================
   security:
     # api 接口加密 (建议: 开发环境将接口加密关闭方便调试，生产环境开启保证安全)

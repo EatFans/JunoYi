@@ -99,6 +99,8 @@
 <!--            <groupId>com.junoyi</groupId>-->
 <!--            <artifactId>junoyi-framework-wework</artifactId>-->
 <!--        </dependency>-->
+
+        <!--   微信支持     -->
     </dependencies>
 
 </project>
