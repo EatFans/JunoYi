@@ -19,5 +19,9 @@ public interface OAuthProvider {
      */
     Platform getPlatform();
 
-
+    /**
+     * 获取能力类型
+     * @return 能力类型
+     */
+    String getCapability();
 }
