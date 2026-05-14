@@ -44,6 +44,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--    第三方平台支持    -->
+        <dependency>
+            <groupId>com.junoyi</groupId>
+            <artifactId>junoyi-framework-platform</artifactId>
+        </dependency>
+
         <!--   微信小程序SDK     -->
         <dependency>
             <groupId>com.github.binarywang</groupId>
