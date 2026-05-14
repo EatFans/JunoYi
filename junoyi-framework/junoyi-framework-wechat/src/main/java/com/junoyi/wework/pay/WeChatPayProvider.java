@@ -10,6 +10,7 @@ import com.junoyi.platform.enums.Platform;
 import com.junoyi.platform.pay.PayProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@ConditionalOnBean(WxPayService.class)
 public class WeChatPayProvider implements PayProvider {
 
     private final WxPayService wxPayService;

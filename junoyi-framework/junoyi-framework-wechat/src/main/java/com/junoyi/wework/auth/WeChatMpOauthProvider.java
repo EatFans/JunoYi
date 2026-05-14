@@ -9,6 +9,7 @@ import com.junoyi.platform.enums.Platform;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@ConditionalOnBean(WxMaService.class)
 public class WeChatMpOauthProvider implements OAuthProvider {
 
     private final WxMaService wxMaService;
@@ -97,18 +99,4 @@ public class WeChatMpOauthProvider implements OAuthProvider {
         }
     }
 
-    /**
-     * 刷新访问令牌
-     * <p>
-     * 微信小程序的 session_key 不支持刷新，需要重新调用 wx.login() 获取新的 code
-     * </p>
-     *
-     * @param refreshToken 刷新令牌
-     * @return OAuth响应对象
-     */
-    @Override
-    public OAuthResponse refreshToken(String refreshToken) {
-        // 微信小程序不支持刷新 session_key
-        return OAuthResponse.fail("微信小程序不支持刷新令牌，请重新登录");
-    }
 }

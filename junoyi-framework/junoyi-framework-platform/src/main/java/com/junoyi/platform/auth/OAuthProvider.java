@@ -67,14 +67,4 @@ public interface OAuthProvider {
      */
     OAuthResponse getUserInfo(OAuthRequest request);
 
-    /**
-     * 刷新访问令牌
-     * <p>
-     * 当访问令牌过期时，使用刷新令牌（refreshToken）获取新的访问令牌
-     * </p>
-     *
-     * @param refreshToken 刷新令牌
-     * @return OAuth响应对象，包含新的访问令牌
-     */
-    OAuthResponse refreshToken(String refreshToken);
 }
