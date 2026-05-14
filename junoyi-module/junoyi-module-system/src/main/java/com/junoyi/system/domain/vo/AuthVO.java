@@ -1,11 +1,13 @@
 package com.junoyi.system.domain.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * 登录验证返回密钥对
  */
 @Data
+@Builder
 public class AuthVO {
 
     /**
