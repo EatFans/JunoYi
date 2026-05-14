@@ -329,6 +329,11 @@ junoyi:
       response: true
       # 排除路径
       exclude-urls:
+        # 小程序平台接口
+        - /auth/wechat/mp/login
+        - /auth/wechat/mp/refresh
+        - /auth/wechat/mp/logout
+        # 其他接口
         - /swagger-ui/**
         - /v3/api-docs/**
         - /doc.html
@@ -353,6 +358,9 @@ junoyi:
       - /auth/login
       - /auth/register
       - /auth/refresh
+      - /auth/wechat/mp/login
+      - /auth/wechat/mp/refresh
+      - /auth/wechat/mp/logout
       - /system/info/**
       - /captcha/**
       - /auth/captcha/config
