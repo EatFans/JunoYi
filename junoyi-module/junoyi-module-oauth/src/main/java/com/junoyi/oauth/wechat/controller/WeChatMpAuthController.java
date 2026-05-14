@@ -29,7 +29,6 @@ public class WeChatMpAuthController extends BaseController {
      * 微信小程序登录接口
      */
     @PostMapping("/login")
-    @PlatformScope(PlatformType.MINI_PROGRAM)
     public R<AuthVO> wechatMpLogin(@RequestBody WechatMpLoginDTO loginDTO){
         weChatMpAuthService.login(loginDTO.getCode());
         return R.ok();
