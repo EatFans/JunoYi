@@ -1,9 +1,9 @@
-package com.junoyi.wework.config;
+package com.junoyi.wechat.config;
 
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import com.junoyi.wework.properties.WxPayProperties;
+import com.junoyi.wechat.properties.WxPayProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

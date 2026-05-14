@@ -1,8 +1,7 @@
-package com.junoyi.wework.pay;
+package com.junoyi.wechat.pay;
 
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
-import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.junoyi.platform.domain.PayRequest;
 import com.junoyi.platform.domain.PayResponse;

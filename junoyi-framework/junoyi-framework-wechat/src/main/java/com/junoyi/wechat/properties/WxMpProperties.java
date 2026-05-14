@@ -1,4 +1,4 @@
-package com.junoyi.wework.properties;
+package com.junoyi.wechat.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,9 +1,9 @@
-package com.junoyi.wework.config;
+package com.junoyi.wechat.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
-import com.junoyi.wework.properties.WxMpProperties;
+import com.junoyi.wechat.properties.WxMpProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
