@@ -10,7 +10,7 @@
 # ==================== JunoYi 框架配置 ====================
 junoyi:
   # 框架版本号
-  version: 0.6.2
+  version: 0.6.3
 
   # ==================== 日志配置 ====================
   log:
@@ -288,7 +288,7 @@ junoyi:
     # 微信小程序配置
     mp:
       # 是否启用微信小程序功能（默认：false）
-      enabled: false
+      enabled: true
       # 小程序 AppID（必填，启用时）
       app-id: your-mini-app-id
       # 小程序 AppSecret（必填，启用时）
