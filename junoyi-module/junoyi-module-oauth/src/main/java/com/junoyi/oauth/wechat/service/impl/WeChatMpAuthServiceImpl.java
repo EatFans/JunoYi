@@ -4,6 +4,7 @@ import com.junoyi.framework.security.helper.AuthHelper;
 import com.junoyi.oauth.wechat.service.IWeChatMpAuthService;
 import com.junoyi.system.domain.vo.AuthVO;
 import com.junoyi.system.mapper.SysUserMapper;
+import com.junoyi.system.mapper.SysUserThirdAuthMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +30,5 @@ public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
     public AuthVO login(String code) {
         return null;
     }
+
 }
