@@ -83,9 +83,9 @@ public class WxPayProperties {
     @PostConstruct
     public void init() {
         if (Boolean.TRUE.equals(enabled)) {
-            log.info("微信支付功能已启用 [商户号: {}]", maskMerchantId(merchantId));
+            log.info("WeChat payment function is enabled [商户号: {}]", maskMerchantId(merchantId));
         } else {
-            log.info("微信支付功能未启用");
+            log.info("WeChat payment function is not enabled");
         }
     }
 

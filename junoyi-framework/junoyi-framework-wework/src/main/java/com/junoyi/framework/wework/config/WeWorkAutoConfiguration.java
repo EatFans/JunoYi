@@ -2,7 +2,6 @@ package com.junoyi.framework.wework.config;
 
 import com.junoyi.framework.wework.core.WeWorkClient;
 import com.junoyi.framework.wework.properties.WeWorkProperties;
-import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -22,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Fan
  */
-@Slf4j
 @AutoConfiguration
 @ConditionalOnProperty(prefix = "junoyi.wework", name = "enable", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(WeWorkProperties.class)
@@ -36,11 +34,6 @@ public class WeWorkAutoConfiguration {
     public WxCpConfigStorage wxCpConfigStorage(WeWorkProperties properties,
                                                ObjectProvider<RedissonClient> redissonClientProvider) {
         properties.validate();
-
-        log.info("企业微信功能已启用 [企业ID: {}, AgentId: {}, Token存储: {}]",
-                maskCorpId(properties.getCorpId()),
-                properties.getAgentId(),
-                properties.getTokenStoreType());
 
         WxCpDefaultConfigImpl configStorage = buildConfigStorage(properties, redissonClientProvider.getIfAvailable());
         applyBasicConfig(configStorage, properties);
@@ -88,16 +81,6 @@ public class WeWorkAutoConfiguration {
         configStorage.setAgentId(properties.getAgentId());
         configStorage.setCorpSecret(properties.getSecret());
         configStorage.setOauth2redirectUri(properties.getRedirectUri());
-    }
-
-    /**
-     * 脱敏企业ID，只显示前4位和后4位
-     */
-    private String maskCorpId(String corpId) {
-        if (corpId == null || corpId.length() <= 8) {
-            return "****";
-        }
-        return corpId.substring(0, 4) + "****" + corpId.substring(corpId.length() - 4);
     }
 }
 
