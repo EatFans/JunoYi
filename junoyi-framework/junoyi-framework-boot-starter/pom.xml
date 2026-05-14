@@ -94,6 +94,13 @@
             <artifactId>junoyi-framework-file</artifactId>
         </dependency>
 
+        <!--    第三方平台支持    -->
+        <dependency>
+            <groupId>com.junoyi</groupId>
+            <artifactId>junoyi-framework-platform</artifactId>
+        </dependency>
+
+
         <!--    企业微信支持    -->
 <!--        <dependency>-->
 <!--            <groupId>com.junoyi</groupId>-->
@@ -101,6 +108,10 @@
 <!--        </dependency>-->
 
         <!--   微信支持     -->
+        <dependency>
+            <groupId>com.junoyi</groupId>
+            <artifactId>junoyi-framework-wechat</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
