@@ -7,6 +7,7 @@ import com.junoyi.framework.security.enums.PlatformType;
 import com.junoyi.framework.security.helper.AuthHelper;
 import com.junoyi.framework.security.module.LoginUser;
 import com.junoyi.framework.security.module.TokenPair;
+import com.junoyi.oauth.wechat.domain.vo.OauthUserInfoVO;
 import com.junoyi.oauth.wechat.service.IWeChatMpAuthService;
 import com.junoyi.platform.auth.OAuthProvider;
 import com.junoyi.platform.core.PlatformManager;
@@ -134,4 +135,21 @@ public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
 
     }
 
+    /**
+     * 获取用户信息
+     * @param userId 用户Id
+     * @return 用户信息
+     */
+    @Override
+    public OauthUserInfoVO getUserInfo(Long userId) {
+        SysUser user = sysUserMapper.selectById(userId);
+        OauthUserInfoVO oauthUserInfoVO = new OauthUserInfoVO();
+        oauthUserInfoVO.setUserId(user.getUserId());
+        oauthUserInfoVO.setAvatar(user.getAvatar());
+        oauthUserInfoVO.setUserName(user.getUserName());
+        oauthUserInfoVO.setNickName(user.getNickName());
+        oauthUserInfoVO.setPhoneNumber(user.getPhonenumber());
+        oauthUserInfoVO.setEmail(user.getEmail());
+        return oauthUserInfoVO;
+    }
 }

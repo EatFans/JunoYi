@@ -1,5 +1,6 @@
 package com.junoyi.oauth.wechat.service;
 
+import com.junoyi.oauth.wechat.domain.vo.OauthUserInfoVO;
 import com.junoyi.system.domain.vo.AuthVO;
 
 /**
@@ -15,4 +16,11 @@ public interface IWeChatMpAuthService {
      * @return 返回 Token 对
      */
     AuthVO login(String code);
+
+    /**
+     * 获取用户信息
+     * @param userId 用户Id
+     * @return 用户信息
+     */
+    OauthUserInfoVO getUserInfo(Long userId);
 }
