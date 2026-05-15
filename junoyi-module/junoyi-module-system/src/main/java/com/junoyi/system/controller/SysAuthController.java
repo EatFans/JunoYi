@@ -81,9 +81,10 @@ public class SysAuthController extends BaseController {
     @PostMapping("/refresh")
     public R<AuthVO> refresh(@RequestParam("refreshToken") String refreshToken) {
         TokenPair tokenPair = authHelper.refresh(refreshToken);
-        AuthVO authVo = new AuthVO();
-        authVo.setAccessToken(tokenPair.getAccessToken());
-        authVo.setRefreshToken(tokenPair.getRefreshToken());
+        AuthVO authVo = AuthVO.builder()
+                .accessToken(tokenPair.getAccessToken())
+                .refreshToken(tokenPair.getRefreshToken())
+                .build();
         return R.ok(authVo);
     }
 

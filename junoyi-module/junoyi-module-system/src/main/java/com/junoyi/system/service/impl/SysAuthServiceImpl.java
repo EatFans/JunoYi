@@ -86,10 +86,10 @@ public class SysAuthServiceImpl implements ISysAuthService {
             EventBus.get().callEvent(new UserLoginEvent(loginUser, loginIp, tokenPair.getTokenId(), "password", userAgent));
 
             // 构建返回结果
-            AuthVO authVo = new AuthVO();
-            authVo.setAccessToken(tokenPair.getAccessToken());
-            authVo.setRefreshToken(tokenPair.getRefreshToken());
-
+            AuthVO authVo = AuthVO.builder()
+                    .accessToken(tokenPair.getAccessToken())
+                    .refreshToken(tokenPair.getRefreshToken())
+                    .build();
             return authVo;
             
         } catch (Exception e) {
