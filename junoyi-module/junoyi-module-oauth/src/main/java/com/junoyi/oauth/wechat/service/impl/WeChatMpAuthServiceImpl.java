@@ -152,4 +152,12 @@ public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
         oauthUserInfoVO.setEmail(user.getEmail());
         return oauthUserInfoVO;
     }
+
+    /**
+     * 退出当前会话
+     */
+    @Override
+    public void logout() {
+        authHelper.logout();
+    }
 }

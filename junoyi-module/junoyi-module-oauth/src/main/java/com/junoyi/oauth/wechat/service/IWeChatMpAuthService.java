@@ -23,4 +23,9 @@ public interface IWeChatMpAuthService {
      * @return 用户信息
      */
     OauthUserInfoVO getUserInfo(Long userId);
+
+    /**
+     * 退出当前会话
+     */
+    void logout();
 }
