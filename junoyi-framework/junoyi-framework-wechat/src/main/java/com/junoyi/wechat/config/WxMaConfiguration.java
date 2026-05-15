@@ -3,6 +3,7 @@ package com.junoyi.wechat.config;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
+import com.junoyi.wechat.auth.WeChatMpOauthProvider;
 import com.junoyi.wechat.properties.WxMpProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,18 @@ public class WxMaConfiguration {
         service.setWxMaConfig(config);
 
         return service;
+    }
+
+    /**
+     * 配置微信小程序 OAuth Provider
+     *
+     * @param wxMaService 微信小程序 Service
+     * @return WeChatMpOauthProvider
+     */
+    @Bean
+    public WeChatMpOauthProvider weChatMpOauthProvider(WxMaService wxMaService) {
+        log.info("微信小程序 OAuth Provider 已注册");
+        return new WeChatMpOauthProvider(wxMaService);
     }
 
     /**

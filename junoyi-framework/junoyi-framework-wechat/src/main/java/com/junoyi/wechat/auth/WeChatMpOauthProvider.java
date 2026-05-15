@@ -9,8 +9,6 @@ import com.junoyi.platform.enums.Platform;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.stereotype.Component;
 
 /**
  * 微信小程序 OAuth 提供者
@@ -21,9 +19,7 @@ import org.springframework.stereotype.Component;
  * @author Fan
  */
 @Slf4j
-@Component
 @RequiredArgsConstructor
-@ConditionalOnBean(WxMaService.class)
 public class WeChatMpOauthProvider implements OAuthProvider {
 
     private final WxMaService wxMaService;
