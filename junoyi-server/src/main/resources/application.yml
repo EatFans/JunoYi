@@ -288,13 +288,11 @@ junoyi:
     # 微信小程序配置
     mp:
       # 是否启用微信小程序功能（默认：false）
-      enabled: true
+      enabled: false
       # 小程序 AppID（必填，启用时）
-#      app-id: your-mini-app-id
+      app-id: your-mini-app-id
       # 小程序 AppSecret（必填，启用时）
-#      secret: your-mini-app-secret
-      app-id: wxe9abcd9049350756
-      secret: 9ab182184c4a069cbc99565ab0586d78
+      secret: your-mini-app-secret
     # 微信支付配置
     pay:
       # 是否启用微信支付功能（默认：false）
