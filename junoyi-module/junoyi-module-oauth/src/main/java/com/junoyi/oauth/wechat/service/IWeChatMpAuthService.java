@@ -33,6 +33,7 @@ public interface IWeChatMpAuthService {
 
     /**
      * 退出当前会话
+     * @return 如果成功就返回true，否则返回false
      */
-    void logout();
+    boolean logout();
 }
