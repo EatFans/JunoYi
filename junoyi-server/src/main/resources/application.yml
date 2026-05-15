@@ -361,7 +361,6 @@ junoyi:
       - /auth/refresh
       - /auth/wechat/mp/login
       - /auth/wechat/mp/refresh
-      - /auth/wechat/mp/logout
       - /system/info/**
       - /captcha/**
       - /auth/captcha/config
