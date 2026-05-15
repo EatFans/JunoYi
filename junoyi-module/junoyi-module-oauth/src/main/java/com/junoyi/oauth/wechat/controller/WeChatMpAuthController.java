@@ -59,6 +59,7 @@ public class WeChatMpAuthController extends BaseController {
     @PostMapping("/logout")
     @PlatformScope(PlatformType.MINI_PROGRAM)
     public R<Void> wechatMpLogout(){
+        weChatMpAuthService.logout();
         return R.ok();
     }
 }
