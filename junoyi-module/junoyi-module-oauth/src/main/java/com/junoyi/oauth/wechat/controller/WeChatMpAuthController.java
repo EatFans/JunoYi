@@ -29,8 +29,7 @@ public class WeChatMpAuthController extends BaseController {
      */
     @PostMapping("/login")
     public R<AuthVO> wechatMpLogin(@RequestBody WechatMpLoginDTO loginDTO){
-        weChatMpAuthService.login(loginDTO.getCode());
-        return R.ok();
+        return R.ok(weChatMpAuthService.login(loginDTO.getCode()));
     }
 
     /**
