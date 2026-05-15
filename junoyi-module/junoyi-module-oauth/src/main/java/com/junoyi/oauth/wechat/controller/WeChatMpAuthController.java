@@ -49,8 +49,8 @@ public class WeChatMpAuthController extends BaseController {
      */
     @PostMapping("/refresh")
     @PlatformScope(PlatformType.MINI_PROGRAM)
-    public R<AuthVO> wechatMpFreshToken(){
-        return R.ok();
+    public R<AuthVO> wechatMpFreshToken(@RequestParam("refreshToken") String refreshToken){
+        return R.ok(weChatMpAuthService.refreshToken(refreshToken));
     }
 
     /**

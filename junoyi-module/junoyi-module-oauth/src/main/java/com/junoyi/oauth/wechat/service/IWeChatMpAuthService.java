@@ -25,6 +25,13 @@ public interface IWeChatMpAuthService {
     OauthUserInfoVO getUserInfo(Long userId);
 
     /**
+     * 刷新访问令牌
+     * @param refreshToken 刷新令牌
+     * @return 令牌对
+     */
+    AuthVO refreshToken(String refreshToken);
+
+    /**
      * 退出当前会话
      */
     void logout();

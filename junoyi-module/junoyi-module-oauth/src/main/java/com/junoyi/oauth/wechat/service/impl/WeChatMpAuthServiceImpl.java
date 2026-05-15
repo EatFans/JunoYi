@@ -154,6 +154,20 @@ public class WeChatMpAuthServiceImpl implements IWeChatMpAuthService {
     }
 
     /**
+     * 刷新访问令牌
+     * @param refreshToken 刷新令牌
+     * @return 令牌对
+     */
+    @Override
+    public AuthVO refreshToken(String refreshToken) {
+        TokenPair tokenPair = authHelper.refresh(refreshToken);
+        return AuthVO.builder()
+                .accessToken(tokenPair.getAccessToken())
+                .refreshToken(tokenPair.getRefreshToken())
+                .build();
+    }
+
+    /**
      * 退出当前会话
      */
     @Override
