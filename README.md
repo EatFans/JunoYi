@@ -343,24 +343,23 @@ JunoYi
 
 ---
 
-## ☕ 支持项目
+## ☕ 关注项目
 
-如果这个项目对你有帮助，欢迎请作者喝杯咖啡 ☕
+为了第一时间获取项目更新、功能预告、版本发布、开发教程以及更多企业级项目实践内容，欢迎关注我们的官方公众号：
 
 <div align="center">
-<table>
-<tr>
-<td align="center">
-    <img width="200" src="docs/img/微信收款.JPG" alt="微信收款码" /><br/>
-    <b>微信</b>
-</td>
-<td align="center">
-    <img width="200" src="docs/img/支付宝收款.JPG" alt="支付宝收款码" /><br/>
-    <b>支付宝</b>
-</td>
-</tr>
-</table>
+    <img src="/docs/img/gongzhonghao.jpg" width="300" height="300"/>
 </div>
+
+**你可以在公众号获取：**
+- 最新版本更新通知
+- 项目开发进度与路线图
+- 企业级项目实战教程
+- Java / Spring Boot / Vue 技术分享
+- 开源项目生态与插件扩展
+- 官方技术交流与问题反馈
+- 商业合作
+- 定制开发支持
 
 ---
 
