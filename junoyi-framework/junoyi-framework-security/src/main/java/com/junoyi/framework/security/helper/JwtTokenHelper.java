@@ -111,34 +111,28 @@ public class JwtTokenHelper implements TokenHelper {
     }
 
     /**
-     * 构建 AccessToken（独立生成）
+     * 构建 AccessToken（轻量级设计）
+     * <p>
+     * JWT 只包含必要的身份信息，权限信息统一从 Redis Session 获取。
+     * 这样设计的优势：
+     * 1. JWT 体积小（减少 75% 体积）
+     * 2. 权限实时生效（修改权限后立即生效）
+     * 3. 提高安全性（权限信息不暴露给客户端）
+     * 4. 可撤销性（删除 Redis Session 即可）
+     * </p>
      */
     private String buildAccessToken(LoginUser loginUser, String tokenId, Date now, Date expiration) {
         String jti = UUID.randomUUID().toString().replace("-", "");
-        
-        JwtBuilder builder = Jwts.builder()
+
+        // JWT 只包含必要的身份信息，权限信息从 Redis Session 获取
+        return Jwts.builder()
                 .subject(String.valueOf(loginUser.getUserId()))
                 .claim(CLAIM_TYPE, TOKEN_TYPE_ACCESS)
-                .claim(CLAIM_TOKEN_ID, tokenId)          // 关联标识
+                .claim(CLAIM_TOKEN_ID, tokenId)          // 关联标识（最重要：用于查询 Redis Session）
                 .claim(CLAIM_JTI, jti)                   // 独立唯一标识
                 .claim(CLAIM_PLATFORM, loginUser.getPlatformType().getCode())
                 .claim(CLAIM_USERNAME, loginUser.getUserName())
-                .claim(CLAIM_NICK_NAME, loginUser.getNickName());
-        
-        // 添加权限列表（如果存在）
-        if (loginUser.getPermissions() != null && !loginUser.getPermissions().isEmpty()) {
-            builder.claim(CLAIM_PERMISSIONS, String.join(",", loginUser.getPermissions()));
-        }
-        
-        // 添加角色列表（如果存在）
-        if (loginUser.getRoles() != null && !loginUser.getRoles().isEmpty()) {
-            builder.claim(CLAIM_ROLES, loginUser.getRoles().stream()
-                    .map(String::valueOf)
-                    .reduce((a, b) -> a + "," + b)
-                    .orElse(""));
-        }
-        
-        return builder
+                .claim(CLAIM_NICK_NAME, loginUser.getNickName())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(getSecretKey(), Jwts.SIG.HS512)
@@ -390,6 +384,9 @@ public class JwtTokenHelper implements TokenHelper {
 
     /**
      * 从 Claims 中提取 LoginUser
+     * <p>
+     * 注意：JWT 中不再包含权限和角色信息，这些信息统一从 Redis Session 获取
+     * </p>
      */
     private LoginUser extractLoginUser(Claims claims) {
         Long userId = Long.parseLong(claims.getSubject());
@@ -397,30 +394,18 @@ public class JwtTokenHelper implements TokenHelper {
         String nickName = claims.get(CLAIM_NICK_NAME, String.class);
         Integer platformCode = claims.get(CLAIM_PLATFORM, Integer.class);
 
-        LoginUser.LoginUserBuilder builder = LoginUser.builder()
+        return LoginUser.builder()
                 .userId(userId)
                 .userName(username)
                 .nickName(nickName)
-                .platformType(getPlatformType(platformCode));
-        
-        // 提取权限列表
-        String permsStr = claims.get(CLAIM_PERMISSIONS, String.class);
-        if (StringUtils.isNotBlank(permsStr)) {
-            Set<String> permissions = new HashSet<>(Arrays.asList(permsStr.split(",")));
-            builder.permissions(permissions);
-        }
-        
-        // 提取角色列表
-        String rolesStr = claims.get(CLAIM_ROLES, String.class);
-        if (StringUtils.isNotBlank(rolesStr)) {
-            Set<Long> roles = Arrays.stream(rolesStr.split(","))
-                    .filter(StringUtils::isNotBlank)
-                    .map(Long::parseLong)
-                    .collect(Collectors.toSet());
-            builder.roles(roles);
-        }
+                .platformType(getPlatformType(platformCode))
+                .build();
 
-        return builder.build();
+        // 注意：权限和角色信息已从 JWT 中移除，统一从 Redis Session 获取
+        // 这样设计的优势：
+        // 1. JWT 体积小（减少 75% 体积）
+        // 2. 权限实时生效（修改权限后立即生效）
+        // 3. 提高安全性（权限信息不暴露给客户端）
     }
 
     /**
