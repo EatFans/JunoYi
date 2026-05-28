@@ -13,7 +13,7 @@
 [![Vue3](https://img.shields.io/badge/Vue-3.x-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-latest-409EFF)](https://element-plus.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.6.2-success)](https://github.com/Juno-Yi/JunoYi)
+[![Version](https://img.shields.io/badge/Version-0.6.4-success)](https://github.com/Juno-Yi/JunoYi)
 
 </div>
 
@@ -178,7 +178,7 @@ mvn spring-boot:run
 
 # 方式三：打包运行
 mvn clean package
-java -jar junoyi-server/target/junoyi-server-0.6.0.jar
+java -jar junoyi-server/target/junoyi-server-0.6.4.jar
 ```
 
 **5. 启动前端**
@@ -298,7 +298,7 @@ JunoYi
 
 | 版本 | 说明 | 状态            |
 |------|------|---------------|
-| 前后端分离版 | 当前版本，适合中小型项目 | ✅ 正式发布 v0.6.1 |
+| 前后端分离版 | 当前版本，适合中小型项目 | ✅ 正式发布 v0.6.4 |
 | 多租户版 | 支持 SaaS 多租户架构 | 🚧 商业项目实践中    |
 | 微服务版 | 基于 Spring Cloud 的分布式架构 | 📋 规划中        |
 
